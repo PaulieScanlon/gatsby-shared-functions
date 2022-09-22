@@ -1,35 +1,36 @@
 import React, { useState, useEffect } from 'react';
 
 const Page = ({ serverData }) => {
-  const [results, setResults] = useState({});
+  const [results, setResults] = useState(null);
 
   useEffect(() => {
     const getResults = async () => {
       try {
-        const { results } = await (
-          await fetch('https://plausible.io/api/v1/stats/timeseries?site_id=paulie.dev&period=30d', {
-            headers: {
-              Authorization: `Bearer ${process.env.PLAUSIBLE_API_KEY}`
-            }
-          })
-        ).json();
+        const response = await fetch('/api/plausible-30d');
 
-        setResults(results);
+        if (!response.ok) {
+          throw new Error(response.statusText, {
+            cause: response.status
+          });
+        }
+        const data = await response.json();
+
+        setResults({ status: response.status, data: data });
       } catch (error) {
-        console.error(error);
+        setResults({ error: error.cause, message: error.message });
       }
     };
     getResults();
   }, []);
 
   return (
-    <div>
+    <div className="grid lg:grid-cols-2 gap-4">
       <div>
-        <h2>Client Results</h2>
+        <h2>CSR</h2>
         <pre>{JSON.stringify(results, null, 2)}</pre>
       </div>
       <div>
-        <h2>Server Results</h2>
+        <h2>SSR</h2>
         <pre>{JSON.stringify(serverData, null, 2)}</pre>
       </div>
     </div>
@@ -37,19 +38,30 @@ const Page = ({ serverData }) => {
 };
 
 export async function getServerData() {
-  const { results } = await (
-    await fetch('https://plausible.io/api/v1/stats/timeseries?site_id=paulie.dev&period=30d', {
-      headers: {
-        Authorization: `Bearer ${process.env.PLAUSIBLE_API_KEY}`
-      }
-    })
-  ).json();
+  const util = require('../utils/plausible-30d-util');
 
-  return {
-    props: {
-      results
+  try {
+    const response = await util();
+    if (!response.ok) {
+      throw new Error(response.message, {
+        cause: response.cause
+      });
     }
-  };
+    const data = await response.json();
+    return {
+      props: {
+        status: response.status,
+        data: data
+      }
+    };
+  } catch (error) {
+    return {
+      props: {
+        status: error.cause,
+        message: error.message
+      }
+    };
+  }
 }
 
 export default Page;
