@@ -1,6 +1,6 @@
 module.exports = {
   content: ['./src/pages/**/*.{js,jsx,ts,tsx}', './src/components/**/*.{js,jsx,ts,tsx}'],
-  safelist: [{ pattern: /text|stroke|border-(sky|pink)/, variants: [] }],
+  safelist: [{ pattern: /from|to|text|stroke|bg|border-(sky|blu|pink|purple|lime|green)/, variants: [] }],
   theme: {
     extend: {}
   },

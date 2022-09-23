@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const CHART_MAX_WIDTH = 600;
 const CHART_MAX_HEIGHT = 300;
 
-const LineChart = ({ primary = 'sky', title, error, data }) => {
+const LineChart = ({ primary = 'sky', title, error, data, method }) => {
   const [tooltip, setTooltip] = useState(null);
 
   const padding = 80;
@@ -34,7 +34,7 @@ const LineChart = ({ primary = 'sky', title, error, data }) => {
   }, [data]);
 
   return (
-    <div className={`min-h-[${CHART_MAX_HEIGHT}px] bg-white rounded-lg shadow-xl border border-slate-50 overflow-hidden py-2`}>
+    <div className={`relative min-h-[${CHART_MAX_HEIGHT}px] bg-white rounded-lg shadow-xl border border-slate-50 overflow-hidden py-2`}>
       {error ? (
         <div className="h-full flex items-center justify-center">
           <div className="flex flex-col items-center justify-center text-red-400 text-xs">
@@ -108,12 +108,19 @@ const LineChart = ({ primary = 'sky', title, error, data }) => {
           </foreignObject>
         ) : null}
       </svg>
-      <small className="px-4 text-xs text-slate-400">
-        60 day page view data for{' '}
-        <a href="https://paulie.dev" target="_blank" rel="noreferrer" className={`text-${primary}-400 no-underline`}>
-          paulie.dev
-        </a>
-      </small>
+      <div className="flex items-center justify-between px-4 py-2">
+        <small className="text-xs text-slate-400">
+          60 day page view data for{' '}
+          <a href="https://paulie.dev" target="_blank" rel="noreferrer" className={`text-${primary}-400 no-underline`}>
+            paulie.dev
+          </a>
+        </small>
+        <div>
+          <div className={`flex items-center px-2 py-0.5 rounded-lg bg-${primary}-400`}>
+            <small className="text-[10px] text-white select-none">{method}</small>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
@@ -131,7 +138,9 @@ LineChart.propTypes = {
       date: PropTypes.string.isRequired,
       value: PropTypes.string.isRequired
     })
-  )
+  ),
+  /** The type of render method used */
+  method: PropTypes.string.isRequired
 };
 
 export default LineChart;
