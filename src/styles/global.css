@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  input::-webkit-datetime-edit-year-field {
+    @apply text-slate-400;
+  }
+  input[type='date' i]::-webkit-calendar-picker-indicator {
+    @apply opacity-50;
+  }
+}
