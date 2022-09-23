@@ -66,7 +66,7 @@ const LineChart = ({ primary = 'sky', title, error, data, method }) => {
                     y={padding / 4}
                     width={bar_width}
                     height={CHART_MAX_HEIGHT - padding / 2}
-                    className="fill-transparent hover:fill-gray-100 cursor-pointer"
+                    className="fill-transparent sm:hover:fill-gray-100 sm:cursor-pointer"
                     onClick={() => handleClick({ value, date, x, y_offset })}
                   />
                   <circle cx={x} cy={y} r={3} fill="none" className={`stroke-${primary}-400`} strokeWidth={1.6} />
@@ -96,7 +96,7 @@ const LineChart = ({ primary = 'sky', title, error, data, method }) => {
             y={tooltip.y_offset < CHART_MAX_HEIGHT / 2 ? tooltip.y_offset + tooltip_height / 4 : tooltip.y_offset - tooltip_height / 2}
             width={tooltip_width}
             height={tooltip_height}
-            className="transition-all duration-300"
+            className="transition-all duration-300 hidden sm:block"
           >
             <div className={`relative rounded-sm border shadow-lg border-${primary}-200 bg-white/80 text-sm p-1 select-none`}>
               <strong className="block uppercase font-bold text-center text-[10px] tracking-widest text-slate-500">Site Visits</strong>

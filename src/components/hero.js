@@ -26,12 +26,12 @@ const Hero = () => {
         />
       </svg>
 
-      <h1 className="m-0 text-center drop-shadow font-extrabold text-transparent sm:text-8xl bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">
+      <h1 className="m-0 text-center font-extrabold text-transparent sm:text-7xl bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">
         Shared Functions
       </h1>
       <div className="mt-4 mb-10">
         <h2 className="text-center text-slate-500 m-0">
-          Use the same function on the client <b>&</b> the server,{' '}
+          Use the same function on the client <b>&</b> the server, <br />
           <em>
             at Runtime <b>&</b> Build Time!
           </em>
@@ -42,7 +42,7 @@ const Hero = () => {
         href="https://paulie.dev"
         target="_blank"
         rel="noreferrer"
-        className="font-semibold text-white rounded-full bg-amber-500 px-8 py-2 hover:bg-orange-500 transition-all duration-300 no-underline"
+        className="font-semibold text-white uppercase tracking-widest rounded bg-amber-400 px-6 py-2 hover:bg-orange-500 transition-all duration-300 no-underline"
       >
         Read Post
       </a>
