@@ -97,7 +97,7 @@ const Page = ({ data, serverData }) => {
               <button
                 disabled={isDisabled || isLoading}
                 type="submit"
-                className="flex col-span-2 lg:col-auto justify-center items-center uppercase tracking-widest font-bold bg-sky-500 p-2 rounded text-white text-xs disabled:text-sky-400 disabled:bg-sky-100 disabled:cursor-not-allowed"
+                className="flex col-span-2 lg:col-auto justify-center items-center uppercase tracking-widest font-bold bg-sky-500 hover:bg-sky-400 transition-all duration-300 p-2 rounded text-white text-xs disabled:text-sky-400 disabled:bg-sky-100 disabled:cursor-not-allowed"
               >
                 {isLoading ? <Loading /> : 'Submit'}
               </button>
@@ -127,14 +127,14 @@ const Page = ({ data, serverData }) => {
         <Section>
           <Details
             primary="lime"
-            secondary="green"
+            secondary="lime"
             title="  Static Analytics"
             description="The date range is fixed. The HTTP request is made by the server at Build Time."
             date={data.siteBuildMetadata.stamp}
           >
             <FixedDates end={data.siteBuildMetadata.date} />
           </Details>
-          <LineChart primary="green" title="Static Analytics" data={data.allStaticResults.nodes} method="SSG" />
+          <LineChart primary="lime" title="Static Analytics" data={data.allStaticResults.nodes} method="SSG" />
         </Section>
       </div>
       <footer className="p-4 sm:p-8 text-xs">

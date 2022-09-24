@@ -7,7 +7,7 @@ module.exports = {
         default: '#663399',
         primary: '#7026b9',
         lighter: '#a456f0',
-        highlight: '#c9c9c9',
+        highlight: '#dadada',
         background: '#11081f'
       }
     }

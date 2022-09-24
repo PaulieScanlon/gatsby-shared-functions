@@ -101,7 +101,7 @@ const LineChart = ({ primary = 'sky', title, error, data, method }) => {
                 />
               );
             })}
-            <polyline fill="none" className={`stroke-${primary}-400`} strokeWidth={1} points={points.join(' ')} />
+            <polyline fill="none" className={`stroke-${primary}-500`} strokeWidth={1} points={points.join(' ')} />
           </g>
         ) : null}
 

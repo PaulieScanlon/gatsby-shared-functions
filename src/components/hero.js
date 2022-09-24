@@ -8,13 +8,13 @@ const Hero = () => {
     <div className="relative bg-background overflow-hidden">
       <div className="relative flex flex-col items-center px-4 sm:px-8 py-32 z-10">
         <HeroIcon />
-        <h1 className="m-0 text-center font-extrabold text-transparent sm:text-7xl text-white">Shared Functions</h1>
+        <h1 className="m-0 text-center font-extrabold text-transparent sm:text-7xl !leading-normal bg-clip-text bg-gradient-to-r from-lighter to-primary">
+          Gatsby Shared Functions
+        </h1>
         <div className="mt-4 mb-10">
           <h2 className="text-center text-highlight m-0 mb-4 font-semibold">
-            Use the same function on the <span className="text-lighter">client</span> <b>&</b> the <span className="text-lighter">server</span>, <br />
-            <em>
-              at <span className="text-lighter">Runtime</span> <b>&</b> <span className="text-lighter">Build Time</span>!
-            </em>
+            Use the same function on the client & the server, <br />
+            at <span className="text-sky-500">Runtime</span> & <span className="text-pink-500">Build Time</span>!
           </h2>
           <p className="text-center text-highlight m-0">Read the post for more information about Shared Functions.</p>
         </div>
@@ -22,7 +22,7 @@ const Hero = () => {
           href="https://paulie.dev"
           target="_blank"
           rel="noreferrer"
-          className="font-semibold text-white uppercase tracking-widest rounded px-6 py-2 bg-primary hover:bg-default transition-all duration-300 no-underline"
+          className="font-semibold text-lighter uppercase tracking-widest rounded-full px-10 py-2 border-2 border-primary hover:text-white transition-all duration-300 no-underline"
         >
           Read Post
         </a>
