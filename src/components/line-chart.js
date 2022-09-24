@@ -27,16 +27,27 @@ const LineChart = ({ primary = 'sky', title, error, data, method }) => {
     : null;
 
   const handleClick = ({ value, date, x, y }) => {
-    const svg = ref.current.getBoundingClientRect();
-    console.log(svg);
-    console.log('value: ', value);
-    console.log('date: ', date);
-    console.log('x: ', x);
-    console.log('y: ', y);
+    const bcr = ref.current.getBoundingClientRect();
+    // console.log(bcr);
+    console.log('width: ', bcr.width);
+    console.log('height: ', bcr.height);
+    const bb = ref.current.getBBox();
+    // console.log(bb);
+    console.log('x: ', bb.x);
+    console.log('y: ', bb.y);
+    // console.log(svg);
+    // console.log('value: ', value);
+    // console.log('date: ', date);
+    // console.log('x: ', x);
+    // console.log('y: ', y);
+    // console.log('svg.x: ', svg.x);
+    // console.log('svg.y: ', svg.y);
+    // console.log('svg.left: ', svg.left);
+    // console.log('svg.top: ', svg.top);
     setTooltip({
       value: value,
-      x: x,
-      y: y
+      x: bb.x,
+      y: bb.y
     });
   };
 
@@ -57,7 +68,7 @@ const LineChart = ({ primary = 'sky', title, error, data, method }) => {
         </div>
       ) : null}
 
-      <svg viewBox={`0 0 ${CHART_MAX_WIDTH} ${CHART_MAX_HEIGHT}`} ref={ref}>
+      <svg ref={ref} viewBox={`0 0 ${CHART_MAX_WIDTH} ${CHART_MAX_HEIGHT}`}>
         <title>{title}</title>
         {data ? (
           <g>
