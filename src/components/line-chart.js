@@ -105,7 +105,7 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
           </g>
         ) : null}
 
-        <g className="transition-all duration-300" transform={`translate(${tooltip?.x}, ${tooltip?.y})`}>
+        <g className="transition-all duration-300 ease-in-out" transform={`translate(${tooltip?.x}, ${tooltip?.y})`}>
           {tooltip ? (
             <g>
               <rect width={tooltip_width} height={tooltip_height} className={`fill-white/80 stroke-${primary}-400`} rx={3} ry={3} />
@@ -116,6 +116,17 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
                 className={`fill-${primary}-600 cursor-pointer hover:fill-gray-400`}
                 r={10}
                 onClick={handleClose}
+              />
+              <circle
+                cx={tooltip_width}
+                width={10}
+                height={10}
+                style={{
+                  transformOrigin: 'center',
+                  transformBox: 'fill-box'
+                }}
+                className={`fill-${primary}-600 select-none pointer-events-none motion-safe:animate-ping opacity-30`}
+                r={10}
               />
               <text x={tooltip_width - 3.2} y={3.4} className="fill-white text-[14px] select-none pointer-events-none">
                 x

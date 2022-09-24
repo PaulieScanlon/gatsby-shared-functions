@@ -9,6 +9,10 @@ module.exports = {
         lighter: '#a456f0',
         highlight: '#dadada',
         background: '#11081f'
+      },
+      keyframes: {},
+      animation: {
+        'spin-slow': 'spin 3s linear infinite'
       }
     }
   },
