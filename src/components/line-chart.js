@@ -27,12 +27,21 @@ const LineChart = ({ primary = 'sky', title, error, data, method }) => {
     : null;
 
   const handleClick = ({ value, date, x, y }) => {
+    const bcr = ref.current.getBoundingClientRect();
+    const safe_x = x > bcr.width / 2 ? x - tooltip_width : x;
+    const safe_y = y < bcr.height / 2 ? y : y - tooltip_height;
+
     setTooltip({
       value: value,
       date: date,
-      x: x,
-      y: y
+      x: safe_x,
+      y: safe_y
     });
+  };
+
+  const handleClose = () => {
+    console.log('handleClose');
+    setTooltip(null);
   };
 
   useEffect(() => {
@@ -97,14 +106,18 @@ const LineChart = ({ primary = 'sky', title, error, data, method }) => {
         ) : null}
         {tooltip ? (
           <g className="transition-all duration-300" transform={`translate(${tooltip.x}, ${tooltip.y})`}>
-            <rect
-              //x={`-${tooltip_width / 2}px`}
-              width={tooltip_width}
-              height={tooltip_height}
-              className={`fill-white/80 stroke-${primary}-400`}
-              rx={3}
-              ry={3}
+            <rect width={tooltip_width} height={tooltip_height} className={`fill-white/80 stroke-${primary}-400`} rx={3} ry={3} />
+            <circle
+              cx={tooltip_width}
+              width={10}
+              height={10}
+              className={`fill-${primary}-600 cursor-pointer hover:fill-gray-400`}
+              r={10}
+              onClick={handleClose}
             />
+            <text x={tooltip_width - 3.2} y={3.4} className="fill-white text-[14px] select-none pointer-events-none">
+              x
+            </text>
             <text x={tooltip_width / 2} y={18} textAnchor="middle" className="uppercase font-bold tracking-widest text-[10px] fill-slate-500">
               Site Visits
             </text>
@@ -116,24 +129,6 @@ const LineChart = ({ primary = 'sky', title, error, data, method }) => {
             </text>
           </g>
         ) : null}
-
-        {/* {tooltip ? (
-          <foreignObject
-            x={tooltip.x < CHART_MAX_WIDTH / 2 ? tooltip.x : tooltip.x - tooltip_width}
-            y={tooltip.y_offset < CHART_MAX_HEIGHT / 2 ? tooltip.y_offset + tooltip_height / 4 : tooltip.y_offset - tooltip_height / 2}
-            width={tooltip_width}
-            height={tooltip_height}
-            className="transition-all duration-300"
-          >
-            <div className={`relative rounded-sm border shadow-lg border-${primary}-200 bg-white/80 text-sm p-1 select-none`}>
-              <strong className="block uppercase font-bold text-center text-[10px] tracking-widest text-slate-500">Site Visits</strong>
-              <strong className={`block text-center text-${primary}-400`}>{tooltip.value}</strong>
-              <small className="block text-center text-slate-400 text-[10px]">
-                {new Date(tooltip.date).toLocaleString('en-US', { year: 'numeric', month: 'short', day: 'numeric', weekday: 'short' })}
-              </small>
-            </div>
-          </foreignObject>
-        ) : null} */}
       </svg>
       <div className="flex items-center justify-between px-4 py-2">
         <small className="text-xs text-slate-400">
