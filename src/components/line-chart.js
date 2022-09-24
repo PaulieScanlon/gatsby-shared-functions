@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 const CHART_MAX_WIDTH = 600;
 const CHART_MAX_HEIGHT = 300;
 
 const LineChart = ({ primary = 'sky', title, error, data, method }) => {
+  const ref = useRef();
   const [tooltip, setTooltip] = useState(null);
 
   const padding = 80;
@@ -25,8 +26,18 @@ const LineChart = ({ primary = 'sky', title, error, data, method }) => {
         .flat()
     : null;
 
-  const handleClick = (props) => {
-    setTooltip(props);
+  const handleClick = ({ value, date, x, y }) => {
+    const svg = ref.current.getBoundingClientRect();
+    console.log(svg);
+    console.log('value: ', value);
+    console.log('date: ', date);
+    console.log('x: ', x);
+    console.log('y: ', y);
+    setTooltip({
+      value: value,
+      x: x,
+      y: y
+    });
   };
 
   useEffect(() => {
@@ -46,16 +57,15 @@ const LineChart = ({ primary = 'sky', title, error, data, method }) => {
         </div>
       ) : null}
 
-      <svg viewBox={`0 0 ${CHART_MAX_WIDTH} ${CHART_MAX_HEIGHT}`}>
+      <svg viewBox={`0 0 ${CHART_MAX_WIDTH} ${CHART_MAX_HEIGHT}`} ref={ref}>
         <title>{title}</title>
         {data ? (
           <g>
             {points.map((point, p) => {
-              const plot = points[p].split(',');
-              const x_bar = plot[0] - bar_width / 2;
-              const y_offset = plot[1] - tooltip_height / 3;
-              const x = plot[0];
-              const y = plot[1];
+              const point_arr = points[p].split(',');
+              const x_bar = point_arr[0] - bar_width / 2;
+              const x = point_arr[0];
+              const y = point_arr[1];
               const value = data[p].value;
               const date = data[p].date;
 
@@ -66,8 +76,8 @@ const LineChart = ({ primary = 'sky', title, error, data, method }) => {
                     y={padding / 4}
                     width={bar_width}
                     height={CHART_MAX_HEIGHT - padding / 2}
-                    className="fill-transparent sm:hover:fill-gray-100 sm:cursor-pointer"
-                    onClick={() => handleClick({ value, date, x, y_offset })}
+                    className="fill-transparent hover:fill-gray-100 cursor-pointer"
+                    onClick={() => handleClick({ value, date, x, y })}
                   />
                   <circle cx={x} cy={y} r={3} fill="none" className={`stroke-${primary}-400`} strokeWidth={1.6} />
                 </g>
@@ -91,12 +101,18 @@ const LineChart = ({ primary = 'sky', title, error, data, method }) => {
           </g>
         ) : null}
         {tooltip ? (
+          <foreignObject x={tooltip.x} y={tooltip.y} width={tooltip_width} height={tooltip_height}>
+            <div className={`relative rounded-sm border shadow-lg border-${primary}-200 bg-white/80 text-sm p-1 select-none`}>{tooltip.value}</div>
+          </foreignObject>
+        ) : null}
+
+        {/* {tooltip ? (
           <foreignObject
             x={tooltip.x < CHART_MAX_WIDTH / 2 ? tooltip.x : tooltip.x - tooltip_width}
             y={tooltip.y_offset < CHART_MAX_HEIGHT / 2 ? tooltip.y_offset + tooltip_height / 4 : tooltip.y_offset - tooltip_height / 2}
             width={tooltip_width}
             height={tooltip_height}
-            className="transition-all duration-300 hidden sm:block"
+            className="transition-all duration-300"
           >
             <div className={`relative rounded-sm border shadow-lg border-${primary}-200 bg-white/80 text-sm p-1 select-none`}>
               <strong className="block uppercase font-bold text-center text-[10px] tracking-widest text-slate-500">Site Visits</strong>
@@ -106,7 +122,7 @@ const LineChart = ({ primary = 'sky', title, error, data, method }) => {
               </small>
             </div>
           </foreignObject>
-        ) : null}
+        ) : null} */}
       </svg>
       <div className="flex items-center justify-between px-4 py-2">
         <small className="text-xs text-slate-400">
