@@ -97,9 +97,23 @@ const LineChart = ({ primary = 'sky', title, error, data, method }) => {
         ) : null}
         {tooltip ? (
           <g className="transition-all duration-300" transform={`translate(${tooltip.x}, ${tooltip.y})`}>
-            <rect width={tooltip_width} height={tooltip_height} className={`fill-white/80 stroke-${primary}-400`} />
-            <text y={15}>{tooltip.value}</text>
-            <text y={35}>{tooltip.date}</text>
+            <rect
+              //x={`-${tooltip_width / 2}px`}
+              width={tooltip_width}
+              height={tooltip_height}
+              className={`fill-white/80 stroke-${primary}-400`}
+              rx={3}
+              ry={3}
+            />
+            <text x={tooltip_width / 2} y={18} textAnchor="middle" className="uppercase font-bold tracking-widest text-[10px] fill-slate-500">
+              Site Visits
+            </text>
+            <text x={tooltip_width / 2} y={40} textAnchor="middle" className={`fill-${primary}-400 font-bold`}>
+              {tooltip.value}
+            </text>
+            <text x={tooltip_width / 2} y={58} textAnchor="middle" className="fill-slate-400 text-[10px]">
+              {new Date(tooltip.date).toLocaleString('en-US', { year: 'numeric', month: 'short', day: 'numeric', weekday: 'short' })}
+            </text>
           </g>
         ) : null}
 
