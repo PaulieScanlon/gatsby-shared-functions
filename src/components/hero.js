@@ -1,12 +1,13 @@
 import React from 'react';
 
 import HeroIcon from './hero-icon';
+import HeroArrow from './hero-arrow';
 import HeroBackground from './hero-background';
 
 const Hero = () => {
   return (
-    <div className="relative bg-background overflow-hidden">
-      <div className="relative flex flex-col items-center px-4 sm:px-8 py-16 sm:py-32 z-10">
+    <div className="relative flex flex-col items-center justify-center bg-background overflow-hidden min-h-screen">
+      <div className="flex flex-col items-center justify center px-4 sm:px-8 py-16 sm:py-24 z-10">
         <HeroIcon />
         <h1 className="m-0 text-center font-extrabold text-transparent sm:text-7xl !leading-tight bg-clip-text bg-gradient-to-r from-lighter to-primary">
           Gatsby Shared Functions
@@ -26,6 +27,7 @@ const Hero = () => {
         >
           Read Post
         </a>
+        <HeroArrow />
       </div>
       <HeroBackground />
     </div>
