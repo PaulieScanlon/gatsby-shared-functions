@@ -104,31 +104,34 @@ const LineChart = ({ primary = 'sky', title, error, data, method }) => {
             <polyline fill="none" className={`stroke-${primary}-400`} strokeWidth={1} points={points.join(' ')} />
           </g>
         ) : null}
-        {tooltip ? (
-          <g className="transition-all duration-300" transform={`translate(${tooltip.x}, ${tooltip.y})`}>
-            <rect width={tooltip_width} height={tooltip_height} className={`fill-white/80 stroke-${primary}-400`} rx={3} ry={3} />
-            <circle
-              cx={tooltip_width}
-              width={10}
-              height={10}
-              className={`fill-${primary}-600 cursor-pointer hover:fill-gray-400`}
-              r={10}
-              onClick={handleClose}
-            />
-            <text x={tooltip_width - 3.2} y={3.4} className="fill-white text-[14px] select-none pointer-events-none">
-              x
-            </text>
-            <text x={tooltip_width / 2} y={18} textAnchor="middle" className="uppercase font-bold tracking-widest text-[10px] fill-slate-500">
-              Site Visits
-            </text>
-            <text x={tooltip_width / 2} y={40} textAnchor="middle" className={`fill-${primary}-400 font-bold`}>
-              {tooltip.value}
-            </text>
-            <text x={tooltip_width / 2} y={58} textAnchor="middle" className="fill-slate-400 text-[10px]">
-              {new Date(tooltip.date).toLocaleString('en-US', { year: 'numeric', month: 'short', day: 'numeric', weekday: 'short' })}
-            </text>
-          </g>
-        ) : null}
+
+        <g className="transition-all duration-300" transform={`translate(${tooltip?.x}, ${tooltip?.y})`}>
+          {tooltip ? (
+            <g>
+              <rect width={tooltip_width} height={tooltip_height} className={`fill-white/80 stroke-${primary}-400`} rx={3} ry={3} />
+              <circle
+                cx={tooltip_width}
+                width={10}
+                height={10}
+                className={`fill-${primary}-600 cursor-pointer hover:fill-gray-400`}
+                r={10}
+                onClick={handleClose}
+              />
+              <text x={tooltip_width - 3.2} y={3.4} className="fill-white text-[14px] select-none pointer-events-none">
+                x
+              </text>
+              <text x={tooltip_width / 2} y={18} textAnchor="middle" className="uppercase font-bold tracking-widest text-[10px] fill-slate-500">
+                Site Visits
+              </text>
+              <text x={tooltip_width / 2} y={40} textAnchor="middle" className={`fill-${primary}-400 font-bold`}>
+                {tooltip.value}
+              </text>
+              <text x={tooltip_width / 2} y={58} textAnchor="middle" className="fill-slate-400 text-[10px]">
+                {new Date(tooltip.date).toLocaleString('en-US', { year: 'numeric', month: 'short', day: 'numeric', weekday: 'short' })}
+              </text>
+            </g>
+          ) : null}
+        </g>
       </svg>
       <div className="flex items-center justify-between px-4 py-2">
         <small className="text-xs text-slate-400">
