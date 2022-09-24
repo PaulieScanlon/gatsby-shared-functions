@@ -37,8 +37,8 @@ const LineChart = ({ primary = 'sky', title, error, data, method }) => {
 
     setTooltip({
       value: value,
-      x: actual_x,
-      y: actual_y
+      x: x,
+      y: y
     });
   };
 
@@ -103,9 +103,9 @@ const LineChart = ({ primary = 'sky', title, error, data, method }) => {
           </g>
         ) : null}
         {tooltip ? (
-          <foreignObject x={tooltip.x} y={tooltip.y} width={tooltip_width} height={tooltip_height} className="transition-all duration-300">
-            <div className={`relative rounded-sm border shadow-lg border-${primary}-200 bg-white/80 text-sm p-1 select-none`}>{tooltip.value}</div>
-          </foreignObject>
+          <g className="transition-all duration-300" transform={`translate(${tooltip.x}, ${tooltip.y})`}>
+            <text>{tooltip.value}</text>
+          </g>
         ) : null}
 
         {/* {tooltip ? (
