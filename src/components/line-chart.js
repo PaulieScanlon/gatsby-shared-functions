@@ -4,20 +4,20 @@ import PropTypes from 'prop-types';
 const CHART_MAX_WIDTH = 600;
 const CHART_MAX_HEIGHT = 300;
 
-const DateText = ({ x, date }) => {
-  return (
-    <text
-      x={x}
-      y={CHART_MAX_HEIGHT - 16}
-      className="fill-gray-300 font-semibold rotate-45 text-[9px] select-none"
-      style={{
-        transformBox: 'fill-box'
-      }}
-    >
-      {new Date(date).toLocaleDateString('en-GB', { year: undefined, month: '2-digit', day: '2-digit' })}
-    </text>
-  );
-};
+// const DateText = ({ x, date }) => {
+//   return (
+//     <text
+//       x={x}
+//       y={CHART_MAX_HEIGHT - 16}
+//       className="fill-gray-300 font-semibold rotate-45 text-[9px] select-none"
+//       style={{
+//         transformBox: 'fill-box'
+//       }}
+//     >
+//       {new Date(date).toLocaleDateString('en-GB', { year: undefined, month: '2-digit', day: '2-digit' })}
+//     </text>
+//   );
+// };
 
 const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
   const ref = useRef();
@@ -98,7 +98,17 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
                     onClick={() => handleClick({ value, date, x, y })}
                   />
                   <circle cx={x} cy={y} r={4} fill="none" className={`stroke-${primary}-400`} strokeWidth={1.6} />
-                  {points.length >= 30 ? <Fragment> {p % 2 === 0 ? <DateText x={x} date={date} /> : null}</Fragment> : <DateText x={x} date={date} />}
+                  <text
+                    x={x}
+                    y={CHART_MAX_HEIGHT - 16}
+                    className="fill-gray-300 font-semibold rotate-45 text-[9px] select-none"
+                    style={{
+                      transformBox: 'fill-box'
+                    }}
+                  >
+                    {new Date(date).toLocaleDateString('en-GB', { year: undefined, month: '2-digit', day: '2-digit' })}
+                  </text>
+                  {/* {points.length >= 30 ? <Fragment> {p % 2 === 0 ? <DateText x={x} date={date} /> : null}</Fragment> : <DateText x={x} date={date} />} */}
                 </g>
               );
             })}
