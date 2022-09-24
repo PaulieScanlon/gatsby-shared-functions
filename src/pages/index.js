@@ -130,9 +130,9 @@ const Page = ({ data, serverData }) => {
             secondary="green"
             title="  Static Analytics"
             description="The date range is fixed. The HTTP request is made by the server at Build Time."
-            date={data.siteBuildMetadata.buildTime}
+            date={data.siteBuildMetadata.stamp}
           >
-            <FixedDates />
+            <FixedDates end={data.siteBuildMetadata.date} />
           </Details>
           <LineChart primary="green" title="Static Analytics" data={data.allStaticResults.nodes} method="SSG" />
         </Section>
@@ -149,7 +149,8 @@ const Page = ({ data, serverData }) => {
 export const query = graphql`
   query {
     siteBuildMetadata {
-      buildTime(formatString: "DD/MM/YYYY @HH:MM:SS")
+      stamp: buildTime(formatString: "MM/DD/YYYY HH:MM:SS")
+      date: buildTime(formatString: "MM/DD/YYYY")
     }
     allStaticResults {
       nodes {
