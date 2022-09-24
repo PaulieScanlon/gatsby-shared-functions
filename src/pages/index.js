@@ -149,7 +149,7 @@ const Page = ({ data, serverData }) => {
 export const query = graphql`
   query {
     siteBuildMetadata {
-      stamp: buildTime(formatString: "MM/DD/YYYY HH:MM:SS")
+      stamp: buildTime(formatString: "MM/DD/YYYY hh:mm:ss")
       date: buildTime(formatString: "MM/DD/YYYY")
     }
     allStaticResults {
