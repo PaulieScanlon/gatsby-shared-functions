@@ -8,11 +8,11 @@ import Details from '../components/details';
 import FixedDates from '../components/fixed-dates';
 import LineChart from '../components/line-chart';
 
-import { START, END } from '../const/dates';
+import { SERVERLESS_START_DATE, SERVER_START_DATE, STATIC_START_DATE, END_DATE, SERVERLESS_DAYS, SERVER_DAYS, STATIC_DAYS } from '../const/dates';
 
 const Page = ({ data, serverData }) => {
-  const [start, setStart] = useState(START);
-  const [end, setEnd] = useState(END);
+  const [start, setStart] = useState(SERVERLESS_START_DATE);
+  const [end, setEnd] = useState(END_DATE);
 
   const [clientResults, setClientResults] = useState(null);
   const [clientDate, setClientDate] = useState(null);
@@ -77,8 +77,8 @@ const Page = ({ data, serverData }) => {
                   type="date"
                   required
                   defaultValue={start}
-                  min={START}
-                  max={END}
+                  min={SERVERLESS_START_DATE}
+                  max={END_DATE}
                   onChange={(event) => setStart(event.target.value)}
                 />
               </label>
@@ -89,8 +89,8 @@ const Page = ({ data, serverData }) => {
                   type="date"
                   required
                   defaultValue={end}
-                  min={START}
-                  max={END}
+                  min={SERVERLESS_START_DATE}
+                  max={END_DATE}
                   onChange={(event) => setEnd(event.target.value)}
                 />
               </label>
@@ -103,18 +103,18 @@ const Page = ({ data, serverData }) => {
               </button>
             </form>
           </Details>
-          <LineChart title="Serverless Analytics" error={error} data={clientResults ? clientResults : null} method="CSR" />
+          <LineChart title="Serverless Analytics" error={error} data={clientResults ? clientResults : null} method="CSR" days={SERVERLESS_DAYS} />
         </Section>
         <Section>
           <Details
             primary="pink"
             secondary="purple"
             title=" Server-side Analytics"
-            description="The date range is fixed. The HTTP request is made by the server on page load (Runtime)."
+            description="The date range is fixed. The HTTP request is made by the server on page load at Runtime."
             date={serverData.serverDate}
             order="lg:order-2"
           >
-            <FixedDates />
+            <FixedDates start={SERVER_START_DATE} />
           </Details>
           <LineChart
             primary="pink"
@@ -122,6 +122,7 @@ const Page = ({ data, serverData }) => {
             error={serverData.serverError}
             data={serverData ? serverData.serverResults : null}
             method="SSR"
+            days={SERVER_DAYS}
           />
         </Section>
         <Section>
@@ -132,9 +133,9 @@ const Page = ({ data, serverData }) => {
             description="The date range is fixed. The HTTP request is made by the server at Build Time."
             date={data.siteBuildMetadata.stamp}
           >
-            <FixedDates end={data.siteBuildMetadata.date} />
+            <FixedDates start={STATIC_START_DATE} end={data.siteBuildMetadata.date} />
           </Details>
-          <LineChart primary="lime" title="Static Analytics" data={data.allStaticResults.nodes} method="SSG" />
+          <LineChart primary="lime" title="Static Analytics" data={data.allStaticResults.nodes} method="SSG" days={STATIC_DAYS} />
         </Section>
       </div>
       <footer className="p-4 sm:p-8 text-xs">
@@ -166,7 +167,7 @@ export async function getServerData() {
   const date = `${new Date().toLocaleDateString()} @${new Date().toLocaleTimeString('en-GB')}`;
 
   try {
-    const response = await util(START, END);
+    const response = await util(SERVER_START_DATE, END_DATE);
 
     if (!response.data) {
       throw new Error('Error');

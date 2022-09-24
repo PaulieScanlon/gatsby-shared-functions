@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const CHART_MAX_WIDTH = 600;
 const CHART_MAX_HEIGHT = 300;
 
-const LineChart = ({ primary = 'sky', title, error, data, method }) => {
+const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
   const ref = useRef();
   const [tooltip, setTooltip] = useState(null);
 
@@ -135,7 +135,7 @@ const LineChart = ({ primary = 'sky', title, error, data, method }) => {
       </svg>
       <div className="flex items-center justify-between px-4 py-2">
         <small className="text-xs text-slate-400">
-          60 day page view data for{' '}
+          <span>{days}</span> day page view data for{' '}
           <a href="https://paulie.dev" target="_blank" rel="noreferrer" className={`text-${primary}-400 no-underline`}>
             paulie.dev
           </a>
@@ -165,7 +165,9 @@ LineChart.propTypes = {
     })
   ),
   /** The type of render method used */
-  method: PropTypes.string.isRequired
+  method: PropTypes.string.isRequired,
+  /** The amount of days the chart is display data for */
+  days: PropTypes.number.isRequired
 };
 
 export default LineChart;
