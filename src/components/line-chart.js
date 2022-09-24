@@ -27,27 +27,18 @@ const LineChart = ({ primary = 'sky', title, error, data, method }) => {
     : null;
 
   const handleClick = ({ value, date, x, y }) => {
-    const bcr = ref.current.getBoundingClientRect();
-    // console.log(bcr);
-    console.log('width: ', bcr.width);
-    console.log('height: ', bcr.height);
-    const bb = ref.current.getBBox();
-    // console.log(bb);
-    console.log('x: ', bb.x);
-    console.log('y: ', bb.y);
-    // console.log(svg);
-    // console.log('value: ', value);
-    // console.log('date: ', date);
-    // console.log('x: ', x);
-    // console.log('y: ', y);
-    // console.log('svg.x: ', svg.x);
-    // console.log('svg.y: ', svg.y);
-    // console.log('svg.left: ', svg.left);
-    // console.log('svg.top: ', svg.top);
+    const rect = ref.current.getBoundingClientRect();
+    const box = ref.current.getBBox();
+    console.log('rect: ', rect);
+    console.log('box: ', box);
+
+    const actual_x = x - rect.left - box.x;
+    const actual_y = y - rect.top - box.y + box.height / 2;
+
     setTooltip({
       value: value,
-      x: bb.x,
-      y: bb.y
+      x: actual_x,
+      y: actual_y
     });
   };
 
@@ -112,7 +103,7 @@ const LineChart = ({ primary = 'sky', title, error, data, method }) => {
           </g>
         ) : null}
         {tooltip ? (
-          <foreignObject x={tooltip.x} y={tooltip.y} width={tooltip_width} height={tooltip_height}>
+          <foreignObject x={tooltip.x} y={tooltip.y} width={tooltip_width} height={tooltip_height} className="transition-all duration-300">
             <div className={`relative rounded-sm border shadow-lg border-${primary}-200 bg-white/80 text-sm p-1 select-none`}>{tooltip.value}</div>
           </foreignObject>
         ) : null}
