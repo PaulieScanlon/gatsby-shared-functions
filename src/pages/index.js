@@ -150,8 +150,8 @@ const Page = ({ data, serverData }) => {
 export const query = graphql`
   query {
     siteBuildMetadata {
-      stamp: buildTime(formatString: "MM/DD/YYYY hh:mm:ss")
-      date: buildTime(formatString: "MM/DD/YYYY")
+      stamp: buildTime(formatString: "DD/MM/YYYY hh:mm:ss")
+      date: buildTime(formatString: "DD/MM/YYYY")
     }
     allStaticResults {
       nodes {

@@ -1,8 +1,23 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 const CHART_MAX_WIDTH = 600;
 const CHART_MAX_HEIGHT = 300;
+
+const DateText = ({ x, date }) => {
+  return (
+    <text
+      x={x}
+      y={CHART_MAX_HEIGHT - 16}
+      className="fill-gray-300 font-semibold rotate-45 text-[9px] select-none"
+      style={{
+        transformBox: 'fill-box'
+      }}
+    >
+      {new Date(date).toLocaleDateString('en-GB', { year: undefined, month: '2-digit', day: '2-digit' })}
+    </text>
+  );
+};
 
 const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
   const ref = useRef();
@@ -10,10 +25,10 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
 
   const padding = 80;
   const y_max = data ? Math.max(...data.map((item) => item.value)) : null;
-  const x_guides = [...Array(8).keys()];
+  const x_guides = [...Array(10).keys()];
+  const bar_width = 12;
   const tooltip_width = 120;
   const tooltip_height = 70;
-  const bar_width = 12;
 
   const points = data
     ? data
@@ -40,7 +55,6 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
   };
 
   const handleClose = () => {
-    console.log('handleClose');
     setTooltip(null);
   };
 
@@ -62,7 +76,7 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
       ) : null}
 
       <svg ref={ref} viewBox={`0 0 ${CHART_MAX_WIDTH} ${CHART_MAX_HEIGHT}`}>
-        <title>{title}</title>
+        <span className="sr-only">{title}</span>
         {data ? (
           <g>
             {points.map((point, p) => {
@@ -77,13 +91,14 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
                 <g key={p}>
                   <rect
                     x={x_bar}
-                    y={padding / 4}
+                    y={8}
                     width={bar_width}
                     height={CHART_MAX_HEIGHT - padding / 2}
-                    className="fill-transparent hover:fill-gray-100 cursor-pointer"
+                    className="fill-transparent hover:fill-gray-100/70 cursor-pointer"
                     onClick={() => handleClick({ value, date, x, y })}
                   />
-                  <circle cx={x} cy={y} r={3} fill="none" className={`stroke-${primary}-400`} strokeWidth={1.6} />
+                  <circle cx={x} cy={y} r={4} fill="none" className={`stroke-${primary}-400`} strokeWidth={1.6} />
+                  {points.length >= 30 ? <Fragment> {p % 2 === 0 ? <DateText x={x} date={date} /> : null}</Fragment> : <DateText x={x} date={date} />}
                 </g>
               );
             })}
@@ -144,7 +159,7 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
           ) : null}
         </g>
       </svg>
-      <div className="flex items-center justify-between px-4 py-2">
+      <div className="flex items-center justify-between p-4">
         <small className="text-xs text-slate-400">
           <span>{days}</span> day page view data for{' '}
           <a href="https://paulie.dev" target="_blank" rel="noreferrer" className={`text-${primary}-400 no-underline`}>
