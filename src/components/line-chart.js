@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 const CHART_MAX_WIDTH = 600;
 const CHART_MAX_HEIGHT = 300;
 
 const LineChart = ({ primary = 'sky', title, error, data, method }) => {
+  const ref = useRef();
   const [tooltip, setTooltip] = useState(null);
 
   const padding = 80;
@@ -25,8 +26,22 @@ const LineChart = ({ primary = 'sky', title, error, data, method }) => {
         .flat()
     : null;
 
-  const handleClick = (props) => {
-    setTooltip(props);
+  const handleClick = ({ value, date, x, y }) => {
+    const bcr = ref.current.getBoundingClientRect();
+    const safe_x = x > bcr.width / 2 ? x - tooltip_width : x;
+    const safe_y = y < bcr.height / 2 ? y : y - tooltip_height;
+
+    setTooltip({
+      value: value,
+      date: date,
+      x: safe_x,
+      y: safe_y
+    });
+  };
+
+  const handleClose = () => {
+    console.log('handleClose');
+    setTooltip(null);
   };
 
   useEffect(() => {
@@ -46,16 +61,15 @@ const LineChart = ({ primary = 'sky', title, error, data, method }) => {
         </div>
       ) : null}
 
-      <svg viewBox={`0 0 ${CHART_MAX_WIDTH} ${CHART_MAX_HEIGHT}`}>
+      <svg ref={ref} viewBox={`0 0 ${CHART_MAX_WIDTH} ${CHART_MAX_HEIGHT}`}>
         <title>{title}</title>
         {data ? (
           <g>
             {points.map((point, p) => {
-              const plot = points[p].split(',');
-              const x_bar = plot[0] - bar_width / 2;
-              const y_offset = plot[1] - tooltip_height / 3;
-              const x = plot[0];
-              const y = plot[1];
+              const point_arr = points[p].split(',');
+              const x_bar = point_arr[0] - bar_width / 2;
+              const x = point_arr[0];
+              const y = point_arr[1];
               const value = data[p].value;
               const date = data[p].date;
 
@@ -66,8 +80,8 @@ const LineChart = ({ primary = 'sky', title, error, data, method }) => {
                     y={padding / 4}
                     width={bar_width}
                     height={CHART_MAX_HEIGHT - padding / 2}
-                    className="fill-transparent sm:hover:fill-gray-100 sm:cursor-pointer"
-                    onClick={() => handleClick({ value, date, x, y_offset })}
+                    className="fill-transparent hover:fill-gray-100 cursor-pointer"
+                    onClick={() => handleClick({ value, date, x, y })}
                   />
                   <circle cx={x} cy={y} r={3} fill="none" className={`stroke-${primary}-400`} strokeWidth={1.6} />
                 </g>
@@ -91,21 +105,29 @@ const LineChart = ({ primary = 'sky', title, error, data, method }) => {
           </g>
         ) : null}
         {tooltip ? (
-          <foreignObject
-            x={tooltip.x < CHART_MAX_WIDTH / 2 ? tooltip.x : tooltip.x - tooltip_width}
-            y={tooltip.y_offset < CHART_MAX_HEIGHT / 2 ? tooltip.y_offset + tooltip_height / 4 : tooltip.y_offset - tooltip_height / 2}
-            width={tooltip_width}
-            height={tooltip_height}
-            className="transition-all duration-300 hidden sm:block"
-          >
-            <div className={`relative rounded-sm border shadow-lg border-${primary}-200 bg-white/80 text-sm p-1 select-none`}>
-              <strong className="block uppercase font-bold text-center text-[10px] tracking-widest text-slate-500">Site Visits</strong>
-              <strong className={`block text-center text-${primary}-400`}>{tooltip.value}</strong>
-              <small className="block text-center text-slate-400 text-[10px]">
-                {new Date(tooltip.date).toLocaleString('en-US', { year: 'numeric', month: 'short', day: 'numeric', weekday: 'short' })}
-              </small>
-            </div>
-          </foreignObject>
+          <g className="transition-all duration-300" transform={`translate(${tooltip.x}, ${tooltip.y})`}>
+            <rect width={tooltip_width} height={tooltip_height} className={`fill-white/80 stroke-${primary}-400`} rx={3} ry={3} />
+            <circle
+              cx={tooltip_width}
+              width={10}
+              height={10}
+              className={`fill-${primary}-600 cursor-pointer hover:fill-gray-400`}
+              r={10}
+              onClick={handleClose}
+            />
+            <text x={tooltip_width - 3.2} y={3.4} className="fill-white text-[14px] select-none pointer-events-none">
+              x
+            </text>
+            <text x={tooltip_width / 2} y={18} textAnchor="middle" className="uppercase font-bold tracking-widest text-[10px] fill-slate-500">
+              Site Visits
+            </text>
+            <text x={tooltip_width / 2} y={40} textAnchor="middle" className={`fill-${primary}-400 font-bold`}>
+              {tooltip.value}
+            </text>
+            <text x={tooltip_width / 2} y={58} textAnchor="middle" className="fill-slate-400 text-[10px]">
+              {new Date(tooltip.date).toLocaleString('en-US', { year: 'numeric', month: 'short', day: 'numeric', weekday: 'short' })}
+            </text>
+          </g>
         ) : null}
       </svg>
       <div className="flex items-center justify-between px-4 py-2">

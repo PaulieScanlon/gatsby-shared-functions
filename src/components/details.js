@@ -35,7 +35,7 @@ Details.propTypes = {
   /** The description to display */
   description: PropTypes.string.isRequired,
   /** The date to display */
-  date: PropTypes.any.isRequired,
+  date: PropTypes.any,
   /** The order of the main div and children */
   order: PropTypes.string
 };
