@@ -33,7 +33,7 @@ const LineChart = ({ primary = 'sky', title, error, data, method }) => {
     console.log('box: ', box);
 
     const actual_x = x - rect.left - box.x;
-    const actual_y = y - rect.top - box.y + box.height / 2;
+    const actual_y = y - rect.top - box.y + rect.height / 2;
 
     setTooltip({
       value: value,
