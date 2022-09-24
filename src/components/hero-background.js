@@ -1,8 +1,8 @@
 import React from 'react';
 
 const HeroBackground = () => (
-  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rotate-90 z-0">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" height={1600}>
+  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rotate-45 z-0">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" height={800}>
       <defs>
         <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="a">
           <stop stopColor="#663399" offset="0%" />
