@@ -27,16 +27,9 @@ const LineChart = ({ primary = 'sky', title, error, data, method }) => {
     : null;
 
   const handleClick = ({ value, date, x, y }) => {
-    const rect = ref.current.getBoundingClientRect();
-    const box = ref.current.getBBox();
-    console.log('rect: ', rect);
-    console.log('box: ', box);
-
-    const actual_x = x - rect.left - box.x;
-    const actual_y = y - rect.top - box.y + rect.height / 2;
-
     setTooltip({
       value: value,
+      date: date,
       x: x,
       y: y
     });
@@ -104,7 +97,9 @@ const LineChart = ({ primary = 'sky', title, error, data, method }) => {
         ) : null}
         {tooltip ? (
           <g className="transition-all duration-300" transform={`translate(${tooltip.x}, ${tooltip.y})`}>
-            <text>{tooltip.value}</text>
+            <rect width={tooltip_width} height={tooltip_height} className={`fill-white/80 stroke-${primary}-400`} />
+            <text y={15}>{tooltip.value}</text>
+            <text y={35}>{tooltip.date}</text>
           </g>
         ) : null}
 
