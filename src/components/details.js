@@ -6,7 +6,7 @@ const Details = ({ primary, secondary, title, description, date, order, children
     <div className={`flex flex-col p-4 gap-8 justify-center ${order}`}>
       <div>
         <h2
-          className={`text-center xl:text-left m-0 mb-2 font-extrabold !leading-normal text-transparent sm:text-5xl bg-clip-text bg-gradient-to-r from-${primary}-400 to-${secondary}-500`}
+          className={`text-center xl:text-left m-0 mb-2 font-extrabold !leading-tight text-transparent sm:text-5xl bg-clip-text bg-gradient-to-r from-${primary}-400 to-${secondary}-500`}
         >
           {title}
         </h2>

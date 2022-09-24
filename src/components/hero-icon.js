@@ -2,7 +2,7 @@ import React from 'react';
 
 const HeroIcon = () => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-32 h-32">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-16 h-16 mb-4 sm:w-32 sm:h-32">
       <defs>
         <linearGradient id="icon-gradient" x1="0%" y1="100%" x2="0%" y2="0%">
           <stop offset="0%" className="[--start-color:theme(colors.primary)]" stopColor="var(--start-color)" />
