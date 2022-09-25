@@ -1,4 +1,4 @@
-const util = require('../utils/ga4-run-report-util');
+const util = require('../utils/shared-function');
 
 export default async function handler(req, res) {
   const {
@@ -14,7 +14,6 @@ export default async function handler(req, res) {
 
     res.status(200).json(response);
   } catch (error) {
-    console.log('////// error');
     res.status(500).json({ message: error.message });
   }
 }

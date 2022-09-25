@@ -62,10 +62,10 @@ const Page = ({ data, serverData }) => {
   return (
     <div className="grid gap-24 xl:gap-32">
       <Hero />
-      <div className="grid gap-24 xl:gap-48 mx-auto max-w-7xl text-slate-500 px-4 sm:px-8">
+      <div className="grid gap-36 xl:gap-48 mx-auto max-w-7xl text-slate-500 px-4 sm:px-8">
         <Section>
           <Explanation />
-          <StaticImage src="../images/diagram-v1.jpg" alt="diagram" className="max-w-3xl mx-auto" />
+          <StaticImage width={800} src="../images/diagram-v1.jpg" alt="diagram" className="my-8 xl:my-0 max-w-2xl mx-auto" />
         </Section>
         <Section>
           <Details
@@ -118,7 +118,7 @@ const Page = ({ data, serverData }) => {
             title=" Server-side Analytics"
             description="The shared function is used by <code>getServerData()</code>. The reponse is returned to the page via the <code>serverData</code> prop."
             date={serverData.serverDate}
-            order="lg:order-2"
+            order="xl:order-1"
           >
             <FixedDates start={SERVER_START_DATE} />
           </Details>
@@ -169,7 +169,7 @@ export const query = graphql`
 `;
 
 export async function getServerData() {
-  const util = require('../utils/ga4-run-report-util');
+  const util = require('../utils/shared-function');
   const date = `${new Date().toLocaleDateString()} @${new Date().toLocaleTimeString('en-GB')}`;
 
   try {

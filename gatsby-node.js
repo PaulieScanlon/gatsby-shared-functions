@@ -1,4 +1,4 @@
-const util = require('./src/utils/ga4-run-report-util');
+const util = require('./src/utils/shared-function');
 const { STATIC_START_DATE, END_DATE } = require('./src/const/dates');
 
 exports.sourceNodes = async ({ actions, reporter, createNodeId, createContentDigest }) => {

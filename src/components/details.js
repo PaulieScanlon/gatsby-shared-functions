@@ -10,7 +10,7 @@ const Details = ({ primary, secondary, title, description, date, order, children
         >
           {title}
         </h2>
-        <p className="text-center xl:text-left text-slate-500" dangerouslySetInnerHTML={{ __html: description }} />
+        <p className="text-center xl:text-left text-slate-500 mx-auto max-w-lg" dangerouslySetInnerHTML={{ __html: description }} />
         <small className="flex gap-1 items-center justify-center xl:justify-start">
           <span className="text-slate-400">Last updated: </span>
           <b className={`text-xs text-${primary}-500`}>{date}</b>
