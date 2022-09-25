@@ -4,26 +4,13 @@ import PropTypes from 'prop-types';
 const CHART_MAX_WIDTH = 600;
 const CHART_MAX_HEIGHT = 300;
 
-// const DateText = ({ x, date }) => {
-//   return (
-//     <text
-//       x={x}
-//       y={CHART_MAX_HEIGHT - 16}
-//       className="fill-gray-300 font-semibold rotate-45 text-[9px] select-none"
-//       style={{
-//         transformBox: 'fill-box'
-//       }}
-//     >
-//       {new Date(date).toLocaleDateString('en-GB', { year: undefined, month: '2-digit', day: '2-digit' })}
-//     </text>
-//   );
-// };
-
 const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
-  const ref = useRef();
+  const svgRef = useRef();
+
   const [tooltip, setTooltip] = useState(null);
 
   const padding = 80;
+  const label_max = 30;
   const y_max = data ? Math.max(...data.map((item) => item.value)) : null;
   const x_guides = [...Array(10).keys()];
   const bar_width = 12;
@@ -42,7 +29,7 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
     : null;
 
   const handleClick = ({ value, date, x, y }) => {
-    const bcr = ref.current.getBoundingClientRect();
+    const bcr = svgRef.current.getBoundingClientRect();
     const safe_x = x > bcr.width / 2 ? x - tooltip_width : x;
     const safe_y = y < bcr.height / 2 ? y : y - tooltip_height;
 
@@ -62,6 +49,16 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
     setTooltip(null);
   }, [data]);
 
+  const Label = ({ x, date }) => {
+    return (
+      <g transform={`translate(${x} ${CHART_MAX_HEIGHT - padding / 4})`}>
+        <text transform="rotate(45)" textAnchor="start" transformorigin="50% 50%" fontSize={8} className="fill-gray-400 font-semibold select-none">
+          {new Date(date).toLocaleDateString('en-GB', { year: undefined, month: '2-digit', day: '2-digit' })}
+        </text>
+      </g>
+    );
+  };
+
   return (
     <div className={`relative min-h-[${CHART_MAX_HEIGHT}px] bg-white rounded-lg shadow-xl border border-slate-50 overflow-hidden py-2`}>
       {error ? (
@@ -75,10 +72,10 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
         </div>
       ) : null}
 
-      <svg ref={ref} viewBox={`0 0 ${CHART_MAX_WIDTH} ${CHART_MAX_HEIGHT}`}>
+      <svg ref={svgRef} viewBox={`0 0 ${CHART_MAX_WIDTH} ${CHART_MAX_HEIGHT}`}>
         <span className="sr-only">{title}</span>
         {data ? (
-          <g>
+          <Fragment>
             {points.map((point, p) => {
               const point_arr = points[p].split(',');
               const x_bar = point_arr[0] - bar_width / 2;
@@ -98,20 +95,22 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
                     onClick={() => handleClick({ value, date, x, y })}
                   />
                   <circle cx={x} cy={y} r={4} fill="none" className={`stroke-${primary}-400`} strokeWidth={1.6} />
-                  <text
-                    x={x}
-                    y={CHART_MAX_HEIGHT - 16}
-                    className="fill-gray-300 font-semibold rotate-45 text-[9px] select-none"
-                    style={{
-                      transformBox: 'fill-box'
-                    }}
-                  >
-                    {new Date(date).toLocaleDateString('en-GB', { year: undefined, month: '2-digit', day: '2-digit' })}
-                  </text>
-                  {/* {points.length >= 30 ? <Fragment> {p % 2 === 0 ? <DateText x={x} date={date} /> : null}</Fragment> : <DateText x={x} date={date} />} */}
                 </g>
               );
             })}
+
+            {points.map((point, d) => {
+              const point_arr = points[d].split(',');
+              const x = point_arr[0];
+              const date = data[d].date;
+
+              return (
+                <Fragment key={d}>
+                  {data.length > label_max ? <Fragment>{d % 2 === 0 ? <Label x={x} date={date} /> : null}</Fragment> : <Label x={x} date={date} />}
+                </Fragment>
+              );
+            })}
+
             {x_guides.map((n, i) => {
               const ratio = i / x_guides.length;
               const y = CHART_MAX_HEIGHT - padding / 1.8 - CHART_MAX_HEIGHT * ratio;
@@ -127,7 +126,7 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
               );
             })}
             <polyline fill="none" className={`stroke-${primary}-500`} strokeWidth={1} points={points.join(' ')} />
-          </g>
+          </Fragment>
         ) : null}
 
         {tooltip ? (

@@ -2,7 +2,7 @@ import React from 'react';
 
 const HeroArrow = () => {
   return (
-    <div className="animate-bounce bg-background mt-16 p-2 w-10 h-10 ring-2 ring-primary/50 shadow-lg rounded-full flex items-center justify-center">
+    <div className="animate-bounce bg-background my-16 p-2 w-10 h-10 ring-2 ring-primary/50 shadow-lg rounded-full flex items-center justify-center">
       <svg
         className="w-6 h-6 text-primary/80"
         fill="none"
