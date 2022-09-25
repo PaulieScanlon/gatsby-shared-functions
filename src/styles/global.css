@@ -9,4 +9,7 @@
   input[type='date' i]::-webkit-calendar-picker-indicator {
     @apply opacity-50;
   }
+  .prose :where(code):not(:where([class~='not-prose'] *)) {
+    @apply !font-light !text-xs rounded px-1.5 py-0.5;
+  }
 }

@@ -3,5 +3,25 @@ require('dotenv').config({
 });
 
 module.exports = {
-  plugins: ['gatsby-plugin-postcss']
+  plugins: [
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        path: `${__dirname}/src/images/`
+      }
+    },
+    'gatsby-plugin-image',
+    'gatsby-transformer-sharp',
+    'gatsby-plugin-postcss',
+    {
+      resolve: 'gatsby-plugin-sharp',
+      options: {
+        defaults: {
+          quality: 90,
+          formats: ['auto', 'webp'],
+          placeholder: 'blurred'
+        }
+      }
+    }
+  ]
 };

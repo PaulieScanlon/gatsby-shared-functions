@@ -13,7 +13,21 @@ module.exports = {
       keyframes: {},
       animation: {
         'spin-slow': 'spin 3s linear infinite'
-      }
+      },
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            code: {
+              '&::before': {
+                content: '"" !important'
+              },
+              '&::after': {
+                content: '"" !important'
+              }
+            }
+          }
+        }
+      })
     }
   },
   plugins: [require('@tailwindcss/typography')]

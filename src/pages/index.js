@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { graphql } from 'gatsby';
+import { StaticImage } from 'gatsby-plugin-image';
 
 import Loading from '../components/loading';
 import Hero from '../components/hero';
+import Explanation from '../components/explanation';
 import Section from '../components/section';
 import Details from '../components/details';
 import FixedDates from '../components/fixed-dates';
@@ -61,6 +63,10 @@ const Page = ({ data, serverData }) => {
     <div className="grid gap-24 xl:gap-32">
       <Hero />
       <div className="grid gap-24 xl:gap-48 mx-auto max-w-7xl text-slate-500 px-4 sm:px-8">
+        <Section>
+          <Explanation />
+          <StaticImage src="../images/diagram-v1.jpg" alt="diagram" className="max-w-3xl mx-auto" />
+        </Section>
         <Section>
           <Details
             primary="sky"
