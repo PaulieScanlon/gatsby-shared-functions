@@ -4,7 +4,7 @@ const createDate = (period) => {
   return new Date(new Date().setDate(new Date().getDate() - period)).toLocaleDateString(LOCALE);
 };
 
-const serverlessDays = 60;
+const serverlessDays = 59;
 const serverDays = 14;
 const staticDays = 30;
 
