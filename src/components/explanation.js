@@ -8,8 +8,7 @@ const Explanation = () => {
           How It Works
         </h2>
         <p className="mt-0 mb-4 text-center xl:text-left text-slate-500">
-          Import and re-use the same function logic in Serverless Functions, <code className="!bg-purple-100 !text-purple-700">getServerData()</code> and{' '}
-          <code className="!bg-purple-100 !text-purple-700">gatsby-node.js</code>.
+          Import and reuse the same function logic in Serverless Functions, <code>getServerData()</code>, and <code>gatsby-node.js</code>.
         </p>
         <p className="mt-0 mb-4 text-center xl:text-left text-slate-500">
           I wrote a little more about how this site works on{' '}

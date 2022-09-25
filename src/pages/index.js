@@ -72,7 +72,7 @@ const Page = ({ data, serverData }) => {
             primary="sky"
             secondary="blue"
             title="Serverless Analytics"
-            description="The date range is dynamic. HTTP requests are made on the client."
+            description="The shared function is used by a Serverless Function which is called from the client. The response is stored in React's <code>useState</code>."
             date={clientDate}
           >
             <form className="grid grid-cols-2 lg:grid-cols-3 gap-4 items-end justify-center lg:justify-start" onSubmit={handleSubmit}>
@@ -109,14 +109,14 @@ const Page = ({ data, serverData }) => {
               </button>
             </form>
           </Details>
-          <LineChart title="Serverless Analytics" error={error} data={clientResults ? clientResults : null} method="CSR" days={SERVERLESS_DAYS} />
+          <LineChart title="Serverless Analytics" error={error} data={clientResults ? clientResults : null} method="Serverless" days={SERVERLESS_DAYS} />
         </Section>
         <Section>
           <Details
             primary="pink"
             secondary="purple"
             title=" Server-side Analytics"
-            description="The date range is fixed. The HTTP request is made by the server on page load at Runtime."
+            description="The shared function is used by <code>getServerData()</code>. The reponse is returned to the page via the <code>serverData</code> prop."
             date={serverData.serverDate}
             order="lg:order-2"
           >
@@ -136,7 +136,7 @@ const Page = ({ data, serverData }) => {
             primary="lime"
             secondary="lime"
             title="  Static Analytics"
-            description="The date range is fixed. The HTTP request is made by the server at Build Time."
+            description="The shared funciton is used in <code>gatsby-node.js</code>. The response is stored in Gatsby's Data Layer which can be queried using GraphQL and returned to the page via the <code>data</code> prop."
             date={data.siteBuildMetadata.stamp}
           >
             <FixedDates start={STATIC_START_DATE} end={data.siteBuildMetadata.date} />

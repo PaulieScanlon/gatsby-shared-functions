@@ -10,6 +10,6 @@
     @apply opacity-50;
   }
   .prose :where(code):not(:where([class~='not-prose'] *)) {
-    @apply !font-light !text-xs rounded px-1.5 py-0.5;
+    @apply !font-light !text-sm rounded px-1.5 py-0.5 !text-slate-700 !bg-slate-100;
   }
 }

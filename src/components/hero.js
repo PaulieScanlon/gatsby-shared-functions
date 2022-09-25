@@ -14,9 +14,8 @@ const Hero = () => {
             <h1 className="m-0 text-center font-extrabold text-transparent sm:text-7xl !leading-tight bg-clip-text bg-gradient-to-r from-lighter to-primary">
               Gatsby Shared Functions
             </h1>
-            <h2 className="text-center text-highlight m-0 mb-4 font-semibold">
-              Use the same function on the client & the server, <br />
-              at <span className="text-sky-500">Runtime</span> & <span className="text-pink-500">Build Time</span>!
+            <h2 className="text-center font-normal text-highlight m-0 mb-4 font-semibold">
+              Use the same function logic at <span className="text-sky-500">Runtime</span> and <span className="text-pink-500">Build Time</span>!
             </h2>
           </div>
           <HeroArrow />
