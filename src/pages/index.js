@@ -37,7 +37,7 @@ const Page = ({ data, serverData }) => {
         setIsLoading(false);
         setClientResults(results.data);
         setClientDate(`${new Date().toLocaleDateString()} @${new Date().toLocaleTimeString('en-GB')}`);
-        setClientDays(parseInt((new Date(end) - new Date(start)) / (1000 * 60 * 60 * 24), 10));
+        setClientDays(parseInt((new Date(end) - new Date(start)) / (1000 * 60 * 60 * 24), 10) + 1);
       }
     } catch (error) {
       setIsLoading(false);
