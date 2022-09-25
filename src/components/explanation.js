@@ -12,8 +12,8 @@ const Explanation = () => {
           <code className="!bg-purple-100 !text-purple-700">gatsby-node.js</code>.
         </p>
         <p className="mt-0 mb-4 text-center xl:text-left text-slate-500">
-          I wrote a little more about how this site works on:{' '}
-          <a href="https://paulie.dev" target="_blank" rel="noreferrer" className={`text-purple-400 no-underline`}>
+          I wrote a little more about how this site works on{' '}
+          <a href="https://paulie.dev" target="_blank" rel="noreferrer" className="text-purple-400 no-underline">
             paulie.dev
           </a>
         </p>
