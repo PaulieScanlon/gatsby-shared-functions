@@ -7,7 +7,7 @@ import HeroBackground from './hero-background';
 const Hero = () => {
   return (
     <div className="relative flex flex-col items-center justify-center bg-background overflow-hidden min-h-screen">
-      <div className="flex flex-col px-4 sm:px-8 py-4 sm:py-24 z-10">
+      <div className="flex flex-col px-4 pb-10 sm:px-8 sm:pb-0 z-10">
         <div className="grid gap-4 items-center justify-center">
           <HeroIcon />
           <div>
