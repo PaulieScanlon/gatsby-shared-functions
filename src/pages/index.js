@@ -18,6 +18,7 @@ const Page = ({ data, serverData }) => {
 
   const [clientResults, setClientResults] = useState(null);
   const [clientDate, setClientDate] = useState(null);
+  const [clientDays, setClientDays] = useState(SERVERLESS_DAYS);
   const [error, setError] = useState(null);
   const [isDisabled, setIsDisabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -36,6 +37,7 @@ const Page = ({ data, serverData }) => {
         setIsLoading(false);
         setClientResults(results.data);
         setClientDate(`${new Date().toLocaleDateString()} @${new Date().toLocaleTimeString('en-GB')}`);
+        setClientDays(parseInt((new Date(end) - new Date(start)) / (1000 * 60 * 60 * 24), 10));
       }
     } catch (error) {
       setIsLoading(false);
@@ -109,7 +111,7 @@ const Page = ({ data, serverData }) => {
               </button>
             </form>
           </Details>
-          <LineChart title="Serverless Analytics" error={error} data={clientResults ? clientResults : null} method="Serverless" days={SERVERLESS_DAYS} />
+          <LineChart title="Serverless Analytics" error={error} data={clientResults ? clientResults : null} method="Serverless" days={clientDays} />
         </Section>
         <Section>
           <Details
