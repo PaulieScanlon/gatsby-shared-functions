@@ -1,6 +1,6 @@
 module.exports = {
   content: ['./src/pages/**/*.{js,jsx,ts,tsx}', './src/components/**/*.{js,jsx,ts,tsx}'],
-  safelist: [{ pattern: /peer-checked|from|to|text|stroke|fill|bg|ring|border-(sky|blue|pink|purple|lime|green)/, variants: [] }],
+  safelist: [{ pattern: /from|to|text|stroke|fill|bg|ring|border-(sky|blue|pink|purple|lime|green)/, variants: ['peer-checked'] }],
   theme: {
     extend: {
       colors: {

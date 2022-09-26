@@ -86,7 +86,7 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
       <label
         htmlFor={title}
-        className={`block ml-auto mr-4 my-2 cursor-pointer w-9 h-5 bg-${primary}-400 rounded-full peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-600 peer-checked:after:translate-x-full peer-checked:bg-${primary}-700 after:content-[''] before:text-xs before:text-slate-400 before:top-[10px] before:right-[60px] before:content-['Dates'] peer-checked:before:content-['Values'] after:absolute before:absolute after:rounded-full after:top-[10px] after:right-[34px] after:h-4 after:w-4 after:transition-all after:duration-300 after:bg-white`}
+        className={`block ml-auto mr-4 my-2 cursor-pointer w-9 h-5 bg-${primary}-400 rounded-full peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-600 peer-checked:after:translate-x-full peer-checked:bg-${primary}-300 after:content-[''] before:text-xs before:text-slate-400 before:top-[10px] before:right-[60px] before:content-['Dates'] peer-checked:before:content-['Values'] after:absolute before:absolute after:rounded-full after:top-[10px] after:right-[34px] after:h-4 after:w-4 after:transition-all after:duration-300 after:bg-white`}
       />
 
       <svg ref={svgRef} viewBox={`0 0 ${CHART_MAX_WIDTH} ${CHART_MAX_HEIGHT}`}>
