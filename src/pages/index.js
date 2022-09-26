@@ -203,5 +203,5 @@ export async function getServerData() {
 export default Page;
 
 export const Head = () => {
-  return <Seo title="Home" />;
+  return <Seo />;
 };
