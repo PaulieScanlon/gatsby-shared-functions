@@ -8,7 +8,8 @@ module.exports = {
         primary: '#7026b9',
         lighter: '#a456f0',
         highlight: '#dadada',
-        background: '#11081f'
+        background: '#11081f',
+        offset: '#170730'
       },
       keyframes: {},
       animation: {

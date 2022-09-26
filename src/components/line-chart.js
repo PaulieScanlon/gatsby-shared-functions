@@ -10,7 +10,7 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
   const [tooltip, setTooltip] = useState(null);
 
   const padding = 80;
-  const label_max = 30;
+  const label_max = 29;
   const y_max = data ? Math.max(...data.map((item) => item.value)) : null;
   const x_guides = [...Array(10).keys()];
   const bar_width = 12;
