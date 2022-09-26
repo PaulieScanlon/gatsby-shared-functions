@@ -8,7 +8,7 @@ module.exports = {
     name: 'Gatsby Shared Functions',
     description: 'Use the same function everywhere!',
     keywords: ['Gatsby', 'Serverless Functions', 'Server-side Rendering'],
-    siteUrl: 'https://gatsbysharedfunctions.gatsbyjs.io',
+    siteUrl: 'https://gatsbysharedfunctions.gatsbyjs.io/',
     defaultImage: 'https://gatsbysharedfunctions.gatsbyjs.io/images/gatsby-shared-functions-open-graph-image.jpg'
   },
   plugins: [
