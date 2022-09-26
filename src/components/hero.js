@@ -12,8 +12,8 @@ const Hero = () => {
           <div className="flex justify-center xl:justify-start">
             <HeroIcon />
           </div>
-          <h1 className="m-0 text-transparent text-center xl:text-left sm:text-7xl !leading-tight xl:!leading-none bg-clip-text bg-gradient-to-r from-lighter to-primary">
-            Gatsby <span className="text-white">Shared Functions</span>
+          <h1 className="m-0 text-white text-center xl:text-left sm:text-7xl !leading-tight xl:!leading-none">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-lighter to-primary">Gatsby</span> Shared Functions
           </h1>
           <h2 className="m-0 font-light text-highlight text-center xl:text-left xl:max-w-md">
             Use the same function logic <em className="text-lighter">everywhere</em>!
