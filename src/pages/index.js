@@ -16,9 +16,9 @@ const Page = ({ data, serverData }) => {
   const [start, setStart] = useState(SERVERLESS_START_DATE);
   const [end, setEnd] = useState(END_DATE);
 
-  const [clientResults, setClientResults] = useState(null);
+  const [clientResults, setClientResults] = useState(serverData ? serverData.serverResults : null);
   const [clientDate, setClientDate] = useState(null);
-  const [clientDays, setClientDays] = useState(SERVERLESS_DAYS);
+  const [clientDays, setClientDays] = useState(SERVER_DAYS);
   const [error, setError] = useState(null);
   const [isDisabled, setIsDisabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -37,7 +37,7 @@ const Page = ({ data, serverData }) => {
         setIsLoading(false);
         setClientResults(results.data);
         setClientDate(`${new Date().toLocaleDateString()} @${new Date().toLocaleTimeString('en-GB')}`);
-        setClientDays(parseInt((new Date(end) - new Date(start)) / (1000 * 60 * 60 * 24), 10) + 1);
+        setClientDays(parseInt((new Date(end) - new Date(start)) / (1000 * 60 * 60 * 24), 10));
       }
     } catch (error) {
       setIsLoading(false);
@@ -82,25 +82,27 @@ const Page = ({ data, serverData }) => {
               <label className="flex flex-col gap-1">
                 <small className="font-bold text-xs">Start</small>
                 <input
-                  className="block cursor-pointer bg-transparent rounded border border-slate-300 text-slate-400 px-2"
+                  className="block cursor-pointer bg-transparent rounded border border-slate-300 text-slate-400 px-2 disabled:cursor-not-allowed"
                   type="date"
                   required
                   defaultValue={start}
                   min={SERVERLESS_START_DATE}
                   max={END_DATE}
                   onChange={(event) => setStart(event.target.value)}
+                  disabled={isDisabled || isLoading}
                 />
               </label>
               <label className="flex flex-col gap-1">
                 <small className="font-bold text-xs">End</small>
                 <input
-                  className="block cursor-pointer bg-transparent rounded border border-slate-300 text-slate-400 px-2"
+                  className="block cursor-pointer bg-transparent rounded border border-slate-300 text-slate-400 px-2 disabled:cursor-not-allowed"
                   type="date"
                   required
                   defaultValue={end}
                   min={SERVERLESS_START_DATE}
                   max={END_DATE}
                   onChange={(event) => setEnd(event.target.value)}
+                  disabled={isDisabled || isLoading}
                 />
               </label>
               <button

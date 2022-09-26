@@ -5,8 +5,8 @@ const createDate = (period) => {
 };
 
 const serverlessDays = 59;
-const serverDays = 14;
-const staticDays = 30;
+const serverDays = 13;
+const staticDays = 29;
 
 module.exports = {
   SERVERLESS_START_DATE: createDate(serverlessDays),

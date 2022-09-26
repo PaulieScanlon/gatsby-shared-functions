@@ -190,7 +190,7 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
       </svg>
       <div className="flex items-center justify-between px-4 pt-6 pb-4">
         <small className="text-xs text-slate-400">
-          <span>{days}</span> day page view data for{' '}
+          <span>{days + 1}</span> day page view data for{' '}
           <a href="https://paulie.dev" target="_blank" rel="noreferrer" className={`text-${primary}-400 no-underline`}>
             paulie.dev
           </a>
