@@ -6,20 +6,21 @@ import Seo from '../components/seo';
 import Loading from '../components/loading';
 import Hero from '../components/hero';
 import Explanation from '../components/explanation';
+import About from '../components/about';
 import Section from '../components/section';
 import Details from '../components/details';
 import FixedDates from '../components/fixed-dates';
 import LineChart from '../components/line-chart';
 
-import { SERVERLESS_START_DATE, SERVER_START_DATE, STATIC_START_DATE, END_DATE, SERVER_DAYS, STATIC_DAYS } from '../const/dates';
+import { RUNTIME_START_DATE, BUILD_TIME_START_DATE, END_DATE, RUNTIME_DAYS, BUILD_TIME_DAYS } from '../const/dates';
 
 const Page = ({ data, serverData }) => {
-  const [start, setStart] = useState(SERVERLESS_START_DATE);
+  const [start, setStart] = useState(RUNTIME_START_DATE);
   const [end, setEnd] = useState(END_DATE);
 
   const [clientResults, setClientResults] = useState(serverData ? serverData.serverResults : null);
   const [clientDate, setClientDate] = useState(serverData ? serverData.serverDate : null);
-  const [clientDays, setClientDays] = useState(SERVER_DAYS);
+  const [clientDays, setClientDays] = useState(RUNTIME_DAYS);
   const [error, setError] = useState(null);
   const [isDisabled, setIsDisabled] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
@@ -66,13 +67,16 @@ const Page = ({ data, serverData }) => {
   };
 
   return (
-    <div className="grid gap-24 xl:gap-32">
+    <div className="grid gap-24 xl:gap-32 pb-24 xl:pb-48">
       <Hero />
       <div className="grid gap-36 xl:gap-48 mx-auto max-w-7xl text-slate-500 px-4 sm:px-8">
         <Section>
           <Explanation />
           <StaticImage width={800} src="../../static/images/diagram-v1.jpg" alt="diagram" className="my-8 xl:my-0 max-w-2xl mx-auto" />
         </Section>
+        <section>
+          <About />
+        </section>
         <Section>
           <Details
             primary="sky"
@@ -89,7 +93,7 @@ const Page = ({ data, serverData }) => {
                   type="date"
                   required
                   defaultValue={start}
-                  min={SERVERLESS_START_DATE}
+                  min={RUNTIME_START_DATE}
                   max={END_DATE}
                   onChange={(event) => setStart(event.target.value)}
                 />
@@ -101,7 +105,7 @@ const Page = ({ data, serverData }) => {
                   type="date"
                   required
                   defaultValue={end}
-                  min={SERVERLESS_START_DATE}
+                  min={RUNTIME_START_DATE}
                   max={END_DATE}
                   onChange={(event) => setEnd(event.target.value)}
                 />
@@ -126,7 +130,7 @@ const Page = ({ data, serverData }) => {
             date={serverData.serverDate}
             order="xl:order-1"
           >
-            <FixedDates start={SERVER_START_DATE} />
+            <FixedDates start={RUNTIME_START_DATE} />
           </Details>
           <LineChart
             primary="pink"
@@ -134,7 +138,7 @@ const Page = ({ data, serverData }) => {
             error={serverData.serverError}
             data={serverData ? serverData.serverResults : null}
             method="SSR"
-            days={SERVER_DAYS}
+            days={RUNTIME_DAYS}
           />
         </Section>
         <Section>
@@ -145,16 +149,11 @@ const Page = ({ data, serverData }) => {
             description="The shared funciton is used in <code>gatsby-node.js</code>. The response is stored in Gatsby's Data Layer which can be queried using GraphQL and returned to the page via the <code>data</code> prop."
             date={data.siteBuildMetadata.stamp}
           >
-            <FixedDates start={STATIC_START_DATE} end={data.siteBuildMetadata.date} />
+            <FixedDates start={BUILD_TIME_START_DATE} end={data.siteBuildMetadata.date} />
           </Details>
-          <LineChart primary="lime" title="Static Analytics" data={data.allStaticResults.nodes} method="SSG" days={STATIC_DAYS} />
+          <LineChart primary="lime" title="Static Analytics" data={data.allStaticResults.nodes} method="SSG" days={BUILD_TIME_DAYS} />
         </Section>
       </div>
-      <footer className="p-4 sm:p-8 text-xs">
-        <a href="https://paulie.dev" target="_blank" rel="noreferrer" className="text-slate-400 no-underline">
-          paulie.dev/posts/2022/09/xxx
-        </a>
-      </footer>
     </div>
   );
 };
@@ -179,7 +178,7 @@ export async function getServerData() {
   const date = `${new Date().toLocaleDateString()} @${new Date().toLocaleTimeString('en-GB')}`;
 
   try {
-    const response = await util(SERVER_START_DATE, END_DATE);
+    const response = await util(RUNTIME_START_DATE, END_DATE);
 
     if (!response.data) {
       throw new Error('Error');

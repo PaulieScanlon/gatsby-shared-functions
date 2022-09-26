@@ -10,7 +10,6 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
   const [tooltip, setTooltip] = useState(null);
 
   const padding = 80;
-  const label_max = 29;
   const y_max = data ? Math.max(...data.map((item) => item.value)) : null;
   const x_guides = [...Array(10).keys()];
   const bar_width = 12;
@@ -48,26 +47,6 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
   useEffect(() => {
     setTooltip(null);
   }, [data]);
-
-  const Label = ({ x, date, value }) => {
-    return (
-      // Visibility is controlled by the toggle checked not(:checked) styles in global.css
-      <g transform={`translate(${x} ${CHART_MAX_HEIGHT - padding / 4})`}>
-        <text transform="rotate(45)" textAnchor="start" transformorigin="50% 50%" fontSize={10} className="date-label fill-slate-400 font-semibold select-none">
-          {new Date(date).toLocaleDateString('en-GB', { year: undefined, month: '2-digit', day: '2-digit' })}
-        </text>
-        <text
-          transform="rotate(45)"
-          textAnchor="start"
-          transformorigin="50% 50%"
-          fontSize={10}
-          className="value-label fill-slate-400 font-semibold select-none"
-        >
-          {value}
-        </text>
-      </g>
-    );
-  };
 
   return (
     <div className={`justify-end relative min-h-[${CHART_MAX_HEIGHT}px] bg-white rounded-lg shadow-xl border border-slate-50 overflow-hidden`}>
@@ -123,13 +102,27 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
               const date = data[d].date;
 
               return (
-                <Fragment key={d}>
-                  {data.length > label_max ? (
-                    <Fragment>{d % 2 === 0 ? <Label x={x} date={date} value={value} /> : null}</Fragment>
-                  ) : (
-                    <Label x={x} date={date} value={value} />
-                  )}
-                </Fragment>
+                // Visibility is controlled by the toggle checked not(:checked) styles in global.css
+                <g key={d} transform={`translate(${x} ${CHART_MAX_HEIGHT - padding / 4})`}>
+                  <text
+                    transform="rotate(45)"
+                    textAnchor="start"
+                    transformorigin="50% 50%"
+                    fontSize={10}
+                    className="date-label fill-slate-400 font-semibold select-none"
+                  >
+                    {new Date(date).toLocaleDateString('en-GB', { year: undefined, month: '2-digit', day: '2-digit' })}
+                  </text>
+                  <text
+                    transform="rotate(45)"
+                    textAnchor="start"
+                    transformorigin="50% 50%"
+                    fontSize={10}
+                    className="value-label fill-slate-400 font-semibold select-none"
+                  >
+                    {value}
+                  </text>
+                </g>
               );
             })}
 

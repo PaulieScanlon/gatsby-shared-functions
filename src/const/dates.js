@@ -4,16 +4,13 @@ const createDate = (period) => {
   return new Date(new Date().setDate(new Date().getDate() - period)).toLocaleDateString(LOCALE);
 };
 
-const serverlessDays = 59;
-const serverDays = 13;
-const staticDays = 29;
+const runtimeDays = 29;
+const builTimeDays = 13;
 
 module.exports = {
-  SERVERLESS_START_DATE: createDate(serverlessDays),
-  SERVERLESS_DAYS: serverlessDays,
-  SERVER_START_DATE: createDate(serverDays),
-  SERVER_DAYS: serverDays,
-  STATIC_START_DATE: createDate(staticDays),
-  STATIC_DAYS: staticDays,
+  RUNTIME_START_DATE: createDate(runtimeDays),
+  RUNTIME_DAYS: runtimeDays,
+  BUILD_TIME_START_DATE: createDate(builTimeDays),
+  BUILD_TIME_DAYS: builTimeDays,
   END_DATE: new Date().toLocaleDateString(LOCALE)
 };
