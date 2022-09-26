@@ -10,17 +10,17 @@ import Details from '../components/details';
 import FixedDates from '../components/fixed-dates';
 import LineChart from '../components/line-chart';
 
-import { SERVERLESS_START_DATE, SERVER_START_DATE, STATIC_START_DATE, END_DATE, SERVERLESS_DAYS, SERVER_DAYS, STATIC_DAYS } from '../const/dates';
+import { SERVERLESS_START_DATE, SERVER_START_DATE, STATIC_START_DATE, END_DATE, SERVER_DAYS, STATIC_DAYS } from '../const/dates';
 
 const Page = ({ data, serverData }) => {
   const [start, setStart] = useState(SERVERLESS_START_DATE);
   const [end, setEnd] = useState(END_DATE);
 
   const [clientResults, setClientResults] = useState(serverData ? serverData.serverResults : null);
-  const [clientDate, setClientDate] = useState(null);
+  const [clientDate, setClientDate] = useState(serverData ? serverData.serverDate : null);
   const [clientDays, setClientDays] = useState(SERVER_DAYS);
   const [error, setError] = useState(null);
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
   const runReport = async () => {
@@ -35,12 +35,14 @@ const Page = ({ data, serverData }) => {
         const results = await response.json();
 
         setIsLoading(false);
+        setIsDisabled(false);
         setClientResults(results.data);
         setClientDate(`${new Date().toLocaleDateString()} @${new Date().toLocaleTimeString('en-GB')}`);
         setClientDays(parseInt((new Date(end) - new Date(start)) / (1000 * 60 * 60 * 24), 10));
       }
     } catch (error) {
       setIsLoading(false);
+      setIsDisabled(true);
       setError(error.message);
     }
   };
@@ -82,33 +84,31 @@ const Page = ({ data, serverData }) => {
               <label className="flex flex-col gap-1">
                 <small className="font-bold text-xs">Start</small>
                 <input
-                  className="block cursor-pointer bg-transparent rounded border border-slate-300 text-slate-400 px-2 disabled:cursor-not-allowed"
+                  className="block cursor-pointer bg-transparent rounded border border-slate-300 text-slate-400 px-2"
                   type="date"
                   required
                   defaultValue={start}
                   min={SERVERLESS_START_DATE}
                   max={END_DATE}
                   onChange={(event) => setStart(event.target.value)}
-                  disabled={isDisabled || isLoading}
                 />
               </label>
               <label className="flex flex-col gap-1">
                 <small className="font-bold text-xs">End</small>
                 <input
-                  className="block cursor-pointer bg-transparent rounded border border-slate-300 text-slate-400 px-2 disabled:cursor-not-allowed"
+                  className="block cursor-pointer bg-transparent rounded border border-slate-300 text-slate-400 px-2"
                   type="date"
                   required
                   defaultValue={end}
                   min={SERVERLESS_START_DATE}
                   max={END_DATE}
                   onChange={(event) => setEnd(event.target.value)}
-                  disabled={isDisabled || isLoading}
                 />
               </label>
               <button
                 disabled={isDisabled || isLoading}
                 type="submit"
-                className="flex col-span-2 lg:col-auto justify-center items-center uppercase tracking-widest font-bold bg-sky-500 hover:bg-sky-400 transition-all duration-300 p-2 rounded text-white text-xs disabled:text-sky-400 disabled:bg-sky-100 disabled:cursor-not-allowed"
+                className="flex col-span-2 lg:col-auto justify-center items-center uppercase tracking-widest font-bold bg-sky-500 hover:bg-sky-400 transition-all duration-300 p-2 rounded text-white text-xs disabled:text-sky-300 disabled:bg-sky-100 disabled:cursor-not-allowed"
               >
                 {isLoading ? <Loading /> : 'Submit'}
               </button>
