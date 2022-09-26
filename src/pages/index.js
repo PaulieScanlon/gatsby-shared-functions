@@ -71,7 +71,7 @@ const Page = ({ data, serverData }) => {
       <div className="grid gap-36 xl:gap-48 mx-auto max-w-7xl text-slate-500 px-4 sm:px-8">
         <Section>
           <Explanation />
-          <StaticImage width={800} src="../images/diagram-v1.jpg" alt="diagram" className="my-8 xl:my-0 max-w-2xl mx-auto" />
+          <StaticImage width={800} src="../../static/images/diagram-v1.jpg" alt="diagram" className="my-8 xl:my-0 max-w-2xl mx-auto" />
         </Section>
         <Section>
           <Details
@@ -203,5 +203,5 @@ export async function getServerData() {
 export default Page;
 
 export const Head = () => {
-  return <Seo />;
+  return <Seo title="Home" />;
 };

@@ -22,5 +22,5 @@ const Page = () => {
 export default Page;
 
 export const Head = () => {
-  return <Seo />;
+  return <Seo title="404" />;
 };

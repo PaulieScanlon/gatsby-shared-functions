@@ -11,12 +11,6 @@ module.exports = {
     defaultImage: 'https://gatsbysharedfunctions.gatsbyjs.io/images/gatsby-shared-functions-open-graph.jpg'
   },
   plugins: [
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        path: `${__dirname}/src/images/`
-      }
-    },
     'gatsby-plugin-image',
     'gatsby-transformer-sharp',
     'gatsby-plugin-postcss',
@@ -24,8 +18,8 @@ module.exports = {
       resolve: 'gatsby-plugin-sharp',
       options: {
         defaults: {
-          quality: 100,
-          formats: ['auto', 'webp'],
+          quality: 90,
+          formats: ['auto', 'webp', 'avif'],
           placeholder: 'blurred'
         }
       }

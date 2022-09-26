@@ -20,7 +20,7 @@ const Hero = () => {
           </h2>
         </div>
         <div className="flex items-center mx-auto pl-8 xl:pl-0 max-w-sm xl:max-w-lg">
-          <StaticImage src="../images/hero-v1.png" alt="hero" />
+          <StaticImage src="../../static/images/hero-v1.png" alt="hero" />
         </div>
       </div>
       <HeroBackground />
