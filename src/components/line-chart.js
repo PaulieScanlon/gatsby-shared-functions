@@ -49,18 +49,28 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
     setTooltip(null);
   }, [data]);
 
-  const Label = ({ x, date }) => {
+  const Label = ({ x, date, value }) => {
     return (
+      // Visibility is controlled by the toggle checked not(:checked) styles in global.css
       <g transform={`translate(${x} ${CHART_MAX_HEIGHT - padding / 4})`}>
-        <text transform="rotate(45)" textAnchor="start" transformorigin="50% 50%" fontSize={8} className="fill-gray-400 font-semibold select-none">
+        <text transform="rotate(45)" textAnchor="start" transformorigin="50% 50%" fontSize={10} className="date-label fill-slate-400 font-semibold select-none">
           {new Date(date).toLocaleDateString('en-GB', { year: undefined, month: '2-digit', day: '2-digit' })}
+        </text>
+        <text
+          transform="rotate(45)"
+          textAnchor="start"
+          transformorigin="50% 50%"
+          fontSize={10}
+          className="value-label fill-slate-400 font-semibold select-none"
+        >
+          {value}
         </text>
       </g>
     );
   };
 
   return (
-    <div className={`relative min-h-[${CHART_MAX_HEIGHT}px] bg-white rounded-lg shadow-xl border border-slate-50 overflow-hidden py-2`}>
+    <div className={`justify-end relative min-h-[${CHART_MAX_HEIGHT}px] bg-white rounded-lg shadow-xl border border-slate-50 overflow-hidden`}>
       {error ? (
         <div className="h-full flex items-center justify-center">
           <div className="flex flex-col items-center justify-center text-red-400 text-xs">
@@ -72,8 +82,15 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
         </div>
       ) : null}
 
+      <input id={title} type="checkbox" className="sr-only peer" />
+      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+      <label
+        htmlFor={title}
+        className={`block ml-auto mr-4 my-2 cursor-pointer w-9 h-5 bg-${primary}-400 rounded-full peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-600 peer-checked:after:translate-x-full peer-checked:bg-${primary}-700 after:content-[''] before:text-xs before:text-slate-400 before:top-[10px] before:right-[60px] before:content-['Dates'] peer-checked:before:content-['Values'] after:absolute before:absolute after:rounded-full after:top-[10px] after:right-[34px] after:h-4 after:w-4 after:transition-all after:duration-300 after:bg-white`}
+      />
+
       <svg ref={svgRef} viewBox={`0 0 ${CHART_MAX_WIDTH} ${CHART_MAX_HEIGHT}`}>
-        <span className="sr-only">{title}</span>
+        <title className="sr-only">{title}</title>
         {data ? (
           <Fragment>
             {points.map((point, p) => {
@@ -102,11 +119,16 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
             {points.map((point, d) => {
               const point_arr = points[d].split(',');
               const x = point_arr[0];
+              const value = data[d].value;
               const date = data[d].date;
 
               return (
                 <Fragment key={d}>
-                  {data.length > label_max ? <Fragment>{d % 2 === 0 ? <Label x={x} date={date} /> : null}</Fragment> : <Label x={x} date={date} />}
+                  {data.length > label_max ? (
+                    <Fragment>{d % 2 === 0 ? <Label x={x} date={date} value={value} /> : null}</Fragment>
+                  ) : (
+                    <Label x={x} date={date} value={value} />
+                  )}
                 </Fragment>
               );
             })}
@@ -136,7 +158,7 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
               cx={tooltip_width}
               width={10}
               height={10}
-              className={`fill-${primary}-600 cursor-pointer hover:fill-gray-400`}
+              className={`fill-${primary}-600 cursor-pointer transition-all duration-200 hover:fill-gray-500`}
               r={10}
               onClick={handleClose}
             />
@@ -166,7 +188,7 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
           </g>
         ) : null}
       </svg>
-      <div className="flex items-center justify-between p-4">
+      <div className="flex items-center justify-between px-4 pt-6 pb-4">
         <small className="text-xs text-slate-400">
           <span>{days}</span> day page view data for{' '}
           <a href="https://paulie.dev" target="_blank" rel="noreferrer" className={`text-${primary}-400 no-underline`}>

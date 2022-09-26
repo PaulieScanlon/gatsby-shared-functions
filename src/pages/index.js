@@ -47,7 +47,8 @@ const Page = ({ data, serverData }) => {
 
   useEffect(() => {
     runReport();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     const s = new Date(start);
