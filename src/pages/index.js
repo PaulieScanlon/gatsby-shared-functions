@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { graphql } from 'gatsby';
 import { StaticImage } from 'gatsby-plugin-image';
 
+import Seo from '../components/seo';
 import Loading from '../components/loading';
 import Hero from '../components/hero';
 import Explanation from '../components/explanation';
@@ -200,3 +201,7 @@ export async function getServerData() {
 }
 
 export default Page;
+
+export const Head = () => {
+  return <Seo />;
+};
