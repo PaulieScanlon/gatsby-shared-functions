@@ -3,11 +3,12 @@ require('dotenv').config({
 });
 
 module.exports = {
+  trailingSlash: 'always',
   siteMetadata: {
     name: 'Gatsby Shared Functions',
     description: 'Use the same function logic everywhere!',
     keywords: ['Gatsby', 'Serverless Functions', 'Server-side Rendering'],
-    siteUrl: 'https://gatsbysharedfunctions.gatsbyjs.io/',
+    siteUrl: 'https://gatsbysharedfunctions.gatsbyjs.io',
     defaultImage: 'https://gatsbysharedfunctions.gatsbyjs.io/images/gatsby-shared-functions-open-graph.jpg'
   },
   plugins: [
