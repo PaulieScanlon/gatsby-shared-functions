@@ -6,6 +6,7 @@ module.exports = {
   trailingSlash: 'always',
   siteMetadata: {
     name: 'Gatsby Shared Functions',
+    twitter: '@PaulieScanlon',
     description: 'Use the same function everywhere!',
     keywords: ['Gatsby', 'Serverless Functions', 'Server-side Rendering'],
     siteUrl: 'https://gatsbysharedfunctions.gatsbyjs.io/',
