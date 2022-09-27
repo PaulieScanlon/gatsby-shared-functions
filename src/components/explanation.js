@@ -13,12 +13,17 @@ const Explanation = () => {
           </p>
           <p className="mt-0 text-center xl:text-left text-slate-500">
             I wrote a little more about how this site works on{' '}
-            <a href="https://paulie.dev" target="_blank" rel="noreferrer" className="text-purple-400 no-underline">
+            <a
+              href="https://paulie.dev/posts/2022/09/how-to-use-serverless-fucntions-with-ssr/"
+              target="_blank"
+              rel="noreferrer"
+              className="text-purple-400 no-underline"
+            >
               paulie.dev
             </a>
           </p>
           <a
-            href="https://paulie.dev"
+            href="https://paulie.dev/posts/2022/09/how-to-use-serverless-fucntions-with-ssr/"
             target="_blank"
             rel="noreferrer"
             className="self-center xl:self-start uppercase tracking-widest text-xs font-bold border border-purple-500 px-4 py-2 rounded-full text-purple-500 no-underline"
