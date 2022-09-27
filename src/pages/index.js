@@ -139,7 +139,7 @@ const Page = ({
             primary="lime"
             secondary="lime"
             title="  Static Analytics"
-            description="The shared funciton is used in <code>gatsby-node.js</code>. The response is stored in Gatsby's Data Layer which can be queried using GraphQL and returned to the page via the <code>data</code> prop."
+            description="The shared funciton is used in <code>gatsby-node.js</code>. The response is stored in Gatsby's Data Layer which can be queried using GraphQL and returned to the page via the <code>data</code> prop. <br /><em class='block text-xs mx-auto xl:mx-0 max-w-sm my-4'>This site is rebuilt every Monday using a GitHub Action that calls a Gatsby Cloud webhook which rebuilds the Static Analytics.</em>"
             date={staticTimestamp}
           >
             <FixedDates start={BUILD_TIME_START_DATE} end={staticDate} />
