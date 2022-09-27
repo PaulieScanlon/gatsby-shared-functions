@@ -1,5 +1,5 @@
-const runtimeDays = 29;
-const builTimeDays = 13;
+const runtimeDays = 30;
+const builTimeDays = 14;
 
 const createDate = (period) => {
   return new Date(new Date().setDate(new Date().getDate() - period));
