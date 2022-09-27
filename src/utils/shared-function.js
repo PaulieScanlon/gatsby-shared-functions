@@ -16,7 +16,11 @@ function formatDate(string) {
   return `${year}/${month}/${day}`;
 }
 
+const LOCALE = 'en-CA';
+
 module.exports = async function (start, end) {
+  console.log('start: ', new Date(start).toLocaleDateString(LOCALE));
+  console.log('end: ', new Date(end).toLocaleDateString(LOCALE));
   try {
     // https://ga-dev-tools.web.app/ga4/dimensions-metrics-explorer/
     const [response] = await analyticsDataClient.runReport({
@@ -31,8 +35,8 @@ module.exports = async function (start, end) {
       ],
       dateRanges: [
         {
-          startDate: start,
-          endDate: end
+          startDate: new Date(start).toLocaleDateString(LOCALE),
+          endDate: new Date(end).toLocaleDateString(LOCALE)
         }
       ],
       dimensions: [

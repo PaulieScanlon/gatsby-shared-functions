@@ -40,7 +40,7 @@ const About = () => {
               rel="noreferrer"
               className="text-orange-400 no-underline"
             >
-              Google Analytics Data API (GA4)
+              Google Analytics Data API
             </a>
             , and displayed as Svg Line Charts.
           </p>
