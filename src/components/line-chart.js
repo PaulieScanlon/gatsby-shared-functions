@@ -111,7 +111,7 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
                     fontSize={10}
                     className="date-label fill-slate-400 font-semibold select-none"
                   >
-                    {new Date(date).toLocaleDateString('en-GB', { year: undefined, month: '2-digit', day: '2-digit' })}
+                    {new Date(date).toLocaleDateString(undefined, { year: undefined, month: '2-digit', day: '2-digit' })}
                   </text>
                   <text
                     transform="rotate(45)"
@@ -176,7 +176,7 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
               {tooltip.value}
             </text>
             <text x={tooltip_width / 2} y={58} textAnchor="middle" className="fill-slate-400 text-[10px]">
-              {new Date(tooltip.date).toLocaleString('en-US', { year: 'numeric', month: 'short', day: 'numeric', weekday: 'short' })}
+              {new Date(tooltip.date).toLocaleString(undefined, { year: 'numeric', month: 'short', day: 'numeric', weekday: 'short' })}
             </text>
           </g>
         ) : null}

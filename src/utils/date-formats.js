@@ -1,6 +1,6 @@
-const prettyDate = (date) => new Date(date).toLocaleDateString('en-GB');
+const prettyDate = (date) => new Date(date).toLocaleDateString();
 const functionalDate = (date) => new Date(date).toLocaleDateString('en-CA');
-const timestamp = () => `${new Date().toLocaleDateString()} @${new Date().toLocaleTimeString('en-GB')}`;
+const timestamp = () => `${new Date().toLocaleDateString()} @${new Date().toLocaleTimeString()}`;
 
 module.exports = {
   prettyDate,
