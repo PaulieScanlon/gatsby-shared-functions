@@ -32,7 +32,7 @@ const Page = ({ data, serverData }) => {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`/api/ga4-run-report?start=${start}&end=${end}`);
+      const response = await fetch(`/api/ga4-run-report?start=${functionalDate(start)}&end=${functionalDate(end)}`);
 
       if (response.status !== 200) {
         throw new Error('Error');
