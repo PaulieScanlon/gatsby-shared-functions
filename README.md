@@ -1,3 +1,3 @@
 # gatsby-shared-functions
 
-A demo repo showing how to share Serverless Functions with SSR pages
+A demo repo showing how to sse the same function everywhere!
