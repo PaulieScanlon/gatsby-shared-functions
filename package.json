@@ -1,7 +1,7 @@
 {
   "name": "gatsby-shared-functions",
   "version": "1.0.0",
-  "description": "A demo repo showing how to share Serverless Functions with SSR pages",
+  "description": "Use the same function everywhere!",
   "main": "index.js",
   "scripts": {
     "develop": "gatsby develop",
@@ -22,21 +22,8 @@
   },
   "homepage": "https://github.com/PaulieScanlon/gatsby-shared-functions#readme",
   "dependencies": {
-    "@google-analytics/data": "^3.0.2",
     "gatsby": "^4.22.1",
-    "gatsby-plugin-image": "^2.23.1",
-    "gatsby-plugin-sharp": "^4.23.1",
-    "gatsby-source-filesystem": "^4.23.0",
-    "gatsby-transformer-sharp": "^4.23.1",
     "react": "^17.0.2",
     "react-dom": "17.0.2"
-  },
-  "devDependencies": {
-    "@tailwindcss/typography": "^0.5.7",
-    "autoprefixer": "^10.4.11",
-    "gatsby-plugin-postcss": "^5.23.0",
-    "postcss": "^8.4.16",
-    "prop-types": "^15.8.1",
-    "tailwindcss": "^3.1.8"
   }
 }
