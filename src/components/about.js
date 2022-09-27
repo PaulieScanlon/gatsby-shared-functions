@@ -40,9 +40,9 @@ const About = () => {
               rel="noreferrer"
               className="text-orange-400 no-underline"
             >
-              Google Analytics Data API
+              Google Analytics Data API{' '}
             </a>
-            , and displayed as Svg Line Charts.
+            and displayed as Svg Line Charts.
           </p>
           <p className="m-0 text-center text-xs">
             <em>All charts work even when JavaScript is disabled in the browser!</em>

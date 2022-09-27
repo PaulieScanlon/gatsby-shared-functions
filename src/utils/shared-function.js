@@ -17,8 +17,6 @@ function formatDate(string) {
 }
 
 module.exports = async function (start, end) {
-  console.log('start: ', start);
-  console.log('end: ', end);
   try {
     // https://ga-dev-tools.web.app/ga4/dimensions-metrics-explorer/
     const [response] = await analyticsDataClient.runReport({

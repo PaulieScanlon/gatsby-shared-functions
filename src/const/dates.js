@@ -1,13 +1,9 @@
-// const LOCALE = 'en-CA';
-// const LOCALE = 'en-GB';
+const runtimeDays = 29;
+const builTimeDays = 13;
 
 const createDate = (period) => {
   return new Date(new Date().setDate(new Date().getDate() - period));
-  // return new Date(new Date().setDate(new Date().getDate() - period)).toLocaleDateString(LOCALE);
 };
-
-const runtimeDays = 29;
-const builTimeDays = 13;
 
 module.exports = {
   RUNTIME_START_DATE: createDate(runtimeDays),

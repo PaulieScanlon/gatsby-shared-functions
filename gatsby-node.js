@@ -1,21 +1,23 @@
-// const util = require('./src/utils/shared-function');
-// const { BUILD_TIME_START_DATE, END_DATE } = require('./src/const/dates');
+const util = require('./src/utils/shared-function');
 
-// exports.sourceNodes = async ({ actions, reporter, createNodeId, createContentDigest }) => {
-//   const response = await util(BUILD_TIME_START_DATE, END_DATE);
+const { functionalDate } = require('./src/utils/date-formats');
+const { BUILD_TIME_START_DATE, END_DATE } = require('./src/const/dates');
 
-//   if (!response) {
-//     reporter.panicOnBuild('🚨  ERROR: Loading "GA4" util');
-//   }
+exports.sourceNodes = async ({ actions, reporter, createNodeId, createContentDigest }) => {
+  const response = await util(functionalDate(BUILD_TIME_START_DATE), functionalDate(END_DATE));
 
-//   response.data.forEach((item) => {
-//     actions.createNode({
-//       ...item,
-//       id: createNodeId(item.date),
-//       internal: {
-//         type: 'staticResults',
-//         contentDigest: createContentDigest(item)
-//       }
-//     });
-//   });
-// };
+  if (!response) {
+    reporter.panicOnBuild('🚨  ERROR: Loading shared function');
+  }
+
+  response.data.forEach((item) => {
+    actions.createNode({
+      ...item,
+      id: createNodeId(item.date),
+      internal: {
+        type: 'staticResults',
+        contentDigest: createContentDigest(item)
+      }
+    });
+  });
+};
