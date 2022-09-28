@@ -68,10 +68,10 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
         className={`block ml-auto mr-4 my-2 cursor-pointer w-9 h-5 bg-${primary}-400 rounded-full peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-600 peer-checked:after:translate-x-full peer-checked:bg-${primary}-300 after:content-[''] before:text-xs before:text-slate-400 before:top-[10px] before:right-[60px] before:content-['Dates'] peer-checked:before:content-['Values'] after:absolute before:absolute after:rounded-full after:top-[10px] after:right-[34px] after:h-4 after:w-4 after:transition-all after:duration-300 after:bg-white`}
       />
 
-      <svg ref={svgRef} viewBox={`0 0 ${CHART_MAX_WIDTH} ${CHART_MAX_HEIGHT}`}>
-        <title className="sr-only">{title}</title>
+      <svg ref={svgRef} viewBox={`0 0 ${CHART_MAX_WIDTH} ${CHART_MAX_HEIGHT}`} role="presentation">
         {data ? (
           <Fragment>
+            <polyline fill="none" className={`stroke-${primary}-500`} strokeWidth={1} points={points.join(' ')} />
             {points.map((point, p) => {
               const point_arr = points[p].split(',');
               const x_bar = point_arr[0] - bar_width / 2;
@@ -90,7 +90,7 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
                     className="fill-transparent hover:fill-gray-100/70 cursor-pointer"
                     onClick={() => handleClick({ value, date, x, y })}
                   />
-                  <circle cx={x} cy={y} r={4} fill="none" className={`stroke-${primary}-400`} strokeWidth={1.6} />
+                  <circle cx={x} cy={y} r={4} className={`stroke-${primary}-400 fill-white pointer-events-none`} strokeWidth={1.6} />
                 </g>
               );
             })}
@@ -140,7 +140,6 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
                 />
               );
             })}
-            <polyline fill="none" className={`stroke-${primary}-500`} strokeWidth={1} points={points.join(' ')} />
           </Fragment>
         ) : null}
 
