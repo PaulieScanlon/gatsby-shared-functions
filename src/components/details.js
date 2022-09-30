@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { timestamp } from '../utils/date-formats';
 
-const Details = ({ primary, secondary, title, description, date, order, children }) => {
+const Details = ({ primary, secondary, title, description, date, staticDate, order, children }) => {
   return (
     <div className={`flex flex-col p-4 gap-8 justify-center ${order}`}>
       <div>
@@ -14,7 +13,7 @@ const Details = ({ primary, secondary, title, description, date, order, children
         <p className="text-center xl:text-left text-slate-500 mx-auto max-w-lg xl:mx-0 xl:max-w-auto" dangerouslySetInnerHTML={{ __html: description }} />
         <small className="flex gap-1 items-center justify-center xl:justify-start">
           <span className="text-slate-400">Last updated: </span>
-          <b className={`text-xs text-${primary}-500`}>{timestamp(date)}</b>
+          <b className={`text-xs text-${primary}-500`}>{date}</b>
         </small>
       </div>
       {children}
