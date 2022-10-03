@@ -1,36 +1,42 @@
 import React, { useEffect, useState, useRef, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-const CHART_MAX_WIDTH = 600;
-const CHART_MAX_HEIGHT = 300;
-
 const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
   const svgRef = useRef();
-
   const [tooltip, setTooltip] = useState(null);
 
-  const padding = 80;
-  const y_max = data ? Math.max(...data.map((item) => item.value)) : null;
-  const x_guides = [...Array(10).keys()];
-  const bar_width = 12;
-  const tooltip_width = 120;
-  const tooltip_height = 70;
+  const chartWidth = 600;
+  const chartHeight = 300;
+  const offsetY = 20;
+  const paddingX = 60;
+  const paddingY = 60;
+  const maxY = data ? Math.max(...data.map((item) => item.value)) : null;
+  const guides = [...Array(10).keys()];
+  const barWidth = 12;
+  const tooltipWidth = 120;
+  const tooltipHeight = 70;
 
-  const points = data
-    ? data
-        .map((point, p) => {
-          const { value } = point;
-          const x = (p / data.length) * (CHART_MAX_WIDTH - padding) + padding / 2;
-          const y = CHART_MAX_HEIGHT - (value / y_max) * (CHART_MAX_HEIGHT - padding) - padding / 2;
-          return `${x},${y}`;
-        })
-        .flat()
-    : null;
+  const properties = data.map((property, index) => {
+    const { value, date } = property;
+    const x = (index / data.length) * (chartWidth - paddingX) + paddingX / 2;
+    const y = chartHeight - offsetY - (value / maxY) * (chartHeight - (paddingY + offsetY)) - paddingY + offsetY;
+    return {
+      value: value,
+      date: date,
+      x: x,
+      y: y
+    };
+  });
+
+  const points = properties.map((point) => {
+    const { x, y } = point;
+    return `${x},${y}`;
+  });
 
   const handleClick = ({ value, date, x, y }) => {
     const bcr = svgRef.current.getBoundingClientRect();
-    const safe_x = x > bcr.width / 2 ? x - tooltip_width : x;
-    const safe_y = y < bcr.height / 2 ? y : y - tooltip_height;
+    const safe_x = x > bcr.width / 2 ? x - tooltipWidth : x;
+    const safe_y = y < bcr.height / 2 ? y : y - tooltipHeight;
 
     setTooltip({
       value: value,
@@ -49,7 +55,7 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
   }, [data]);
 
   return (
-    <div className={`justify-end relative min-h-[${CHART_MAX_HEIGHT}px] bg-white rounded-lg shadow-xl border border-slate-50 overflow-hidden`}>
+    <div className={`justify-end relative min-h-[${chartHeight}px] bg-white rounded-lg shadow-xl border border-slate-50 overflow-hidden`}>
       {error ? (
         <div className="h-full flex items-center justify-center">
           <div className="flex flex-col items-center justify-center text-red-400 text-xs">
@@ -68,76 +74,63 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
         className={`block ml-auto mr-4 my-2 cursor-pointer w-9 h-5 bg-${primary}-400 rounded-full peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-600 peer-checked:after:translate-x-full peer-checked:bg-${primary}-300 after:content-[''] before:text-xs before:text-slate-400 before:top-[10px] before:right-[60px] before:content-['Dates'] peer-checked:before:content-['Values'] after:absolute before:absolute after:rounded-full after:top-[10px] after:right-[34px] after:h-4 after:w-4 after:transition-all after:duration-300 after:bg-white`}
       />
 
-      <svg ref={svgRef} viewBox={`0 0 ${CHART_MAX_WIDTH} ${CHART_MAX_HEIGHT}`} role="presentation">
+      <svg ref={svgRef} viewBox={`0 0 ${chartWidth} ${chartHeight}`} role="presentation">
         {data ? (
           <Fragment>
-            <polyline fill="none" className={`stroke-${primary}-500`} strokeWidth={1} points={points.join(' ')} />
-            {points.map((point, p) => {
-              const point_arr = points[p].split(',');
-              const x_bar = point_arr[0] - bar_width / 2;
-              const x = point_arr[0];
-              const y = point_arr[1];
-              const value = data[p].value;
-              const date = data[p].date;
-
-              return (
-                <g key={p}>
-                  <rect
-                    x={x_bar}
-                    y={8}
-                    width={bar_width}
-                    height={CHART_MAX_HEIGHT - padding / 2}
-                    className="fill-transparent hover:fill-gray-100/70 cursor-pointer"
-                    onClick={() => handleClick({ value, date, x, y })}
-                  />
-                  <circle cx={x} cy={y} r={4} className={`stroke-${primary}-400 fill-white pointer-events-none`} strokeWidth={1.6} />
-                </g>
-              );
-            })}
-
-            {points.map((point, d) => {
-              const point_arr = points[d].split(',');
-              const x = point_arr[0];
-              const value = data[d].value;
-              const date = data[d].date;
-
-              return (
-                // Visibility is controlled by the toggle checked not(:checked) styles in global.css
-                <g key={d} transform={`translate(${x} ${CHART_MAX_HEIGHT - padding / 4})`}>
-                  <text
-                    transform="rotate(45)"
-                    textAnchor="start"
-                    transformorigin="50% 50%"
-                    fontSize={10}
-                    className="date-label fill-slate-400 font-semibold select-none"
-                  >
-                    {new Date(date).toLocaleDateString(undefined, { year: undefined, month: '2-digit', day: '2-digit' })}
-                  </text>
-                  <text
-                    transform="rotate(45)"
-                    textAnchor="start"
-                    transformorigin="50% 50%"
-                    fontSize={10}
-                    className="value-label fill-slate-400 font-semibold select-none"
-                  >
-                    {value}
-                  </text>
-                </g>
-              );
-            })}
-
-            {x_guides.map((n, i) => {
-              const ratio = i / x_guides.length;
-              const y = CHART_MAX_HEIGHT - padding / 1.8 - CHART_MAX_HEIGHT * ratio;
+            {guides.map((_, index) => {
+              const ratio = index / guides.length;
+              const y = chartHeight - paddingY - chartHeight * ratio;
 
               return (
                 <polyline
-                  key={i}
+                  key={index}
+                  className="stroke-gray-200"
                   fill="none"
-                  className="stroke-gray-300"
-                  strokeWidth={0.5}
-                  points={`${padding / 2},${y} ${CHART_MAX_WIDTH - padding / 2},${y}`}
+                  strokeWidth={1}
+                  points={`${paddingX / 2},${y} ${chartWidth - paddingX / 2},${y}`}
                 />
+              );
+            })}
+
+            <polyline fill="none" className={`stroke-${primary}-500`} strokeWidth={1} points={points} />
+
+            {properties.map((property, index) => {
+              const { value, date, x, y } = property;
+
+              return (
+                <Fragment key={index}>
+                  <rect
+                    x={x - barWidth / 2}
+                    y={0}
+                    width={barWidth}
+                    height={chartHeight - paddingY}
+                    className="fill-transparent hover:fill-gray-100/70 cursor-pointer"
+                    onClick={() => handleClick({ value, date, x, y })}
+                  />
+
+                  <circle cx={x} cy={y} r={4} className={`stroke-${primary}-400 fill-white pointer-events-none`} strokeWidth={1.6} />
+
+                  <g transform={`translate(${x} ${chartHeight - (paddingY - offsetY)})`}>
+                    <text
+                      transform="rotate(45)"
+                      textAnchor="start"
+                      transformorigin="50% 50%"
+                      fontSize={10}
+                      className="date-label fill-slate-400 font-semibold select-none"
+                    >
+                      {new Date(date).toLocaleDateString(undefined, { year: undefined, month: '2-digit', day: '2-digit' })}
+                    </text>
+                    <text
+                      transform="rotate(45)"
+                      textAnchor="start"
+                      transformorigin="50% 50%"
+                      fontSize={10}
+                      className="value-label fill-slate-400 font-semibold select-none"
+                    >
+                      {value}
+                    </text>
+                  </g>
+                </Fragment>
               );
             })}
           </Fragment>
@@ -145,9 +138,9 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
 
         {tooltip ? (
           <g className="transition-all duration-300 ease-in-out" transform={`translate(${tooltip.x}, ${tooltip.y})`}>
-            <rect width={tooltip_width} height={tooltip_height} className={`fill-white/80 stroke-${primary}-400`} rx={3} ry={3} />
+            <rect width={tooltipWidth} height={tooltipHeight} className={`fill-white/80 stroke-${primary}-400`} rx={3} ry={3} />
             <circle
-              cx={tooltip_width}
+              cx={tooltipWidth}
               width={10}
               height={10}
               className={`fill-${primary}-600 cursor-pointer transition-all duration-200 hover:fill-gray-500`}
@@ -155,7 +148,7 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
               onClick={handleClose}
             />
             <circle
-              cx={tooltip_width}
+              cx={tooltipWidth}
               width={10}
               height={10}
               style={{
@@ -165,16 +158,16 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
               className={`fill-${primary}-600 select-none pointer-events-none motion-safe:animate-ping opacity-30`}
               r={10}
             />
-            <text x={tooltip_width - 3.2} y={3.4} className="fill-white text-[14px] select-none pointer-events-none">
+            <text x={tooltipWidth - 3.2} y={3.4} className="fill-white text-[14px] select-none pointer-events-none">
               x
             </text>
-            <text x={tooltip_width / 2} y={18} textAnchor="middle" className="uppercase font-bold tracking-widest text-[10px] fill-slate-500">
+            <text x={tooltipWidth / 2} y={18} textAnchor="middle" className="uppercase font-bold tracking-widest text-[10px] fill-slate-500">
               Site Visits
             </text>
-            <text x={tooltip_width / 2} y={40} textAnchor="middle" className={`fill-${primary}-400 font-bold`}>
+            <text x={tooltipWidth / 2} y={40} textAnchor="middle" className={`fill-${primary}-400 font-bold`}>
               {tooltip.value}
             </text>
-            <text x={tooltip_width / 2} y={58} textAnchor="middle" className="fill-slate-400 text-[10px]">
+            <text x={tooltipWidth / 2} y={58} textAnchor="middle" className="fill-slate-400 text-[10px]">
               {new Date(tooltip.date).toLocaleString(undefined, { year: 'numeric', month: 'short', day: 'numeric', weekday: 'short' })}
             </text>
           </g>
