@@ -23,7 +23,8 @@
   "homepage": "https://github.com/PaulieScanlon/gatsby-shared-functions#readme",
   "dependencies": {
     "@google-analytics/data": "^3.0.2",
-    "gatsby": "^4.22.1",
+    "gatsby": "^4.21.1",
+    "gatsby-plugin-gatsby-cloud": "^4.24.0",
     "gatsby-plugin-image": "^2.23.1",
     "gatsby-plugin-sharp": "^4.23.1",
     "gatsby-source-filesystem": "^4.23.0",

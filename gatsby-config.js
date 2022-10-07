@@ -13,15 +13,16 @@ module.exports = {
     defaultImage: 'https://gatsbysharedfunctions.gatsbyjs.io/images/gatsby-shared-functions-open-graph-image.jpg'
   },
   plugins: [
+    'gatsby-plugin-postcss',
+    'gatsby-plugin-gatsby-cloud',
     'gatsby-plugin-image',
     'gatsby-transformer-sharp',
-    'gatsby-plugin-postcss',
     {
       resolve: 'gatsby-plugin-sharp',
       options: {
         defaults: {
           quality: 90,
-          formats: ['auto', 'webp', 'avif'],
+          formats: ['auto', 'webp'],
           placeholder: 'blurred'
         }
       }
