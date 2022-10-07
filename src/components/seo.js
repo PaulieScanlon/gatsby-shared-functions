@@ -40,8 +40,8 @@ const Seo = () => {
       <meta property="og:image:alt" content={description} />
 
       {/* Twitter */}
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:site" content={name} />
+      <meta name="twitter:card" content="summary" />
+      <meta name="twitter:site" content={twitter} />
       <meta name="twitter:creator" content={twitter} />
       <meta name="twitter:title" content={name} />
       <meta name="twitter:description" content={description} />
