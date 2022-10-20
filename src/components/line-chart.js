@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { AppContext } from '../context/app-context';
 
 const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
   const svgRef = useRef();
@@ -118,7 +119,11 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
                       fontSize={10}
                       className="date-label fill-slate-400 font-semibold select-none"
                     >
-                      {new Date(date).toLocaleDateString(undefined, { year: undefined, month: '2-digit', day: '2-digit' })}
+                      <AppContext.Consumer>
+                        {({ hydrated }) => {
+                          return hydrated ? new Date(date).toLocaleDateString(undefined, { year: undefined, month: '2-digit', day: '2-digit' }) : '';
+                        }}
+                      </AppContext.Consumer>
                     </text>
                     <text
                       transform="rotate(45)"

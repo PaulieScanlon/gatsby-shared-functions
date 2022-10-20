@@ -15,6 +15,7 @@ import LineChart from '../components/line-chart';
 import { functionalDate, timestamp } from '../utils/date-formats';
 
 import { RUNTIME_START_DATE, BUILD_TIME_START_DATE, END_DATE, RUNTIME_DAYS, BUILD_TIME_DAYS } from '../const/dates';
+import { AppContext } from '../context/app-context';
 
 const Page = ({
   data: {
@@ -86,29 +87,45 @@ const Page = ({
             <form className="grid grid-cols-2 lg:grid-cols-3 gap-4 items-end justify-center lg:justify-start" onSubmit={handleSubmit}>
               <label className="flex flex-col gap-1">
                 <small className="font-bold text-xs">Start</small>
-                <input
-                  className="block cursor-pointer bg-transparent rounded border border-slate-300 text-slate-400 px-2"
-                  type="date"
-                  required
-                  defaultValue={functionalDate(start)}
-                  min={functionalDate(RUNTIME_START_DATE)}
-                  max={functionalDate(END_DATE)}
-                  format="dd-mm-yyyy"
-                  onChange={(event) => setStart(event.target.value)}
-                />
+                <AppContext.Consumer>
+                  {({ hydrated }) => {
+                    return hydrated ? (
+                      <input
+                        className="block cursor-pointer bg-transparent rounded border border-slate-300 text-slate-400 px-2"
+                        type="date"
+                        required
+                        defaultValue={functionalDate(start)}
+                        min={functionalDate(RUNTIME_START_DATE)}
+                        max={functionalDate(END_DATE)}
+                        format="dd-mm-yyyy"
+                        onChange={(event) => setStart(event.target.value)}
+                      />
+                    ) : (
+                      <div className="rounded border border-slate-200 h-8" />
+                    );
+                  }}
+                </AppContext.Consumer>
               </label>
               <label className="flex flex-col gap-1">
                 <small className="font-bold text-xs">End</small>
-                <input
-                  className="block cursor-pointer bg-transparent rounded border border-slate-300 text-slate-400 px-2"
-                  type="date"
-                  required
-                  defaultValue={functionalDate(end)}
-                  min={functionalDate(RUNTIME_START_DATE)}
-                  max={functionalDate(END_DATE)}
-                  format="dd-mm-yyyy"
-                  onChange={(event) => setEnd(event.target.value)}
-                />
+                <AppContext.Consumer>
+                  {({ hydrated }) => {
+                    return hydrated ? (
+                      <input
+                        className="block cursor-pointer bg-transparent rounded border border-slate-300 text-slate-400 px-2"
+                        type="date"
+                        required
+                        defaultValue={functionalDate(end)}
+                        min={functionalDate(RUNTIME_START_DATE)}
+                        max={functionalDate(END_DATE)}
+                        format="dd-mm-yyyy"
+                        onChange={(event) => setEnd(event.target.value)}
+                      />
+                    ) : (
+                      <div className="rounded border border-slate-200 h-8" />
+                    );
+                  }}
+                </AppContext.Consumer>
               </label>
               <button
                 disabled={isDisabled || isLoading}
