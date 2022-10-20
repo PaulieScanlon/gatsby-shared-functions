@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { AppContext } from '../context/app-context';
+
 const Details = ({ primary, secondary, title, description, date, staticDate, order, children }) => {
   return (
     <div className={`flex flex-col p-4 gap-8 justify-center ${order}`}>
@@ -13,7 +15,13 @@ const Details = ({ primary, secondary, title, description, date, staticDate, ord
         <p className="text-center xl:text-left text-slate-500 mx-auto max-w-lg xl:mx-0 xl:max-w-auto" dangerouslySetInnerHTML={{ __html: description }} />
         <small className="flex gap-1 items-center justify-center xl:justify-start">
           <span className="text-slate-400">Last updated: </span>
-          <b className={`text-xs text-${primary}-500`}>{date}</b>
+          <time className={`font-bold text-xs text-${primary}-500 h-4`}>
+            <AppContext.Consumer>
+              {({ hydrated }) => {
+                return hydrated ? date : '';
+              }}
+            </AppContext.Consumer>
+          </time>
         </small>
       </div>
       {children}
