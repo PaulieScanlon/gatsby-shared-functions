@@ -86,7 +86,7 @@ const Page = ({
             <form className="grid grid-cols-2 lg:grid-cols-3 gap-4 items-end justify-center lg:justify-start" onSubmit={handleSubmit}>
               <label className="flex flex-col gap-1">
                 <small className="font-bold text-xs">Start</small>
-                <input
+                {/* <input
                   className="block cursor-pointer bg-transparent rounded border border-slate-300 text-slate-400 px-2"
                   type="date"
                   required
@@ -95,11 +95,11 @@ const Page = ({
                   max={functionalDate(END_DATE)}
                   format="dd-mm-yyyy"
                   onChange={(event) => setStart(event.target.value)}
-                />
+                /> */}
               </label>
               <label className="flex flex-col gap-1">
                 <small className="font-bold text-xs">End</small>
-                <input
+                {/* <input
                   className="block cursor-pointer bg-transparent rounded border border-slate-300 text-slate-400 px-2"
                   type="date"
                   required
@@ -108,7 +108,7 @@ const Page = ({
                   max={functionalDate(END_DATE)}
                   format="dd-mm-yyyy"
                   onChange={(event) => setEnd(event.target.value)}
-                />
+                /> */}
               </label>
               <button
                 disabled={isDisabled || isLoading}
