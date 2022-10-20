@@ -20,13 +20,13 @@ const FixedDates = ({ start, end }) => {
       </div>
       <div className="flex flex-col gap-1">
         <small className="block font-bold text-slate-400 text-xs">End</small>
-        {/* <time className="inline-block m-0 text-slate-300 rounded border border-slate-200 px-2 select-none h-8 min-w-24">
+        <time className="inline-block m-0 text-slate-300 rounded border border-slate-200 px-2 select-none h-8 min-w-24">
           <AppContext.Consumer>
             {({ hydrated }) => {
               return hydrated ? end : '';
             }}
           </AppContext.Consumer>
-        </time> */}
+        </time>
       </div>
     </div>
   );
