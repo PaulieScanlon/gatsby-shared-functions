@@ -112,7 +112,7 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
                   <circle cx={x} cy={y} r={4} className={`stroke-${primary}-400 fill-white pointer-events-none`} strokeWidth={1.6} />
 
                   <g transform={`translate(${x} ${chartHeight - (paddingY - offsetY)})`}>
-                    {/* <text
+                    <text
                       transform="rotate(45)"
                       textAnchor="start"
                       transformorigin="50% 50%"
@@ -124,7 +124,7 @@ const LineChart = ({ primary = 'sky', title, error, data, method, days }) => {
                           return hydrated ? new Date(date).toLocaleDateString(undefined, { year: undefined, month: '2-digit', day: '2-digit' }) : '';
                         }}
                       </AppContext.Consumer>
-                    </text> */}
+                    </text>
                     <text
                       transform="rotate(45)"
                       textAnchor="start"
